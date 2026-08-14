@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LMS Platform — User Guide & Capabilities Overview</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { font-family: 'Inter', sans-serif; }
+html { scroll-behavior: smooth; }
+.guide-mode .pres-only { display: none !important; }
+.pres-mode .guide-only { display: none !important; }
+.pres-mode .slide { display: flex; min-height: 100vh; flex-direction: column; justify-content: center; align-items: center; padding: 4rem; }
+.pres-mode .slide:nth-child(even) { background: linear-gradient(135deg, #0f172a, #1e293b); color: white; }
+.pres-mode .slide:nth-child(even) h2,
+.pres-mode .slide:nth-child(even) h3,
+.pres-mode .slide:nth-child(even) h4,
+.pres-mode .slide:nth-child(even) p,
+.pres-mode .slide:nth-child(even) span,
+.pres-mode .slide:nth-child(even) td,
+.pres-mode .slide:nth-child(even) th { color: inherit; }
+.pres-mode .slide:nth-child(even) .text-slate-900,
+.pres-mode .slide:nth-child(even) .text-slate-800,
+.pres-mode .slide:nth-child(even) .text-slate-700 { color: #ffffff !important; }
+.pres-mode .slide:nth-child(even) .text-slate-500,
+.pres-mode .slide:nth-child(even) .text-slate-600,
+.pres-mode .slide:nth-child(even) .text-slate-400 { color: #cbd5e1 !important; }
+/* Force dark text inside light-background cards regardless of slide position */
+.pres-mode .slide [class*="bg-orange-50"] .text-slate-900,
+.pres-mode .slide [class*="bg-blue-50"] .text-slate-900,
+.pres-mode .slide [class*="bg-emerald-50"] .text-slate-900,
+.pres-mode .slide [class*="bg-amber-50"] .text-slate-900,
+.pres-mode .slide [class*="bg-slate-50"] .text-slate-900,
+.pres-mode .slide [class*="bg-orange-50"] .font-bold,
+.pres-mode .slide [class*="bg-blue-50"] .font-bold,
+.pres-mode .slide [class*="bg-emerald-50"] .font-bold,
+.pres-mode .slide [class*="bg-amber-50"] .font-bold,
+.pres-mode .slide [class*="bg-slate-50"] .font-bold { color: #0f172a !important; }
+.pres-mode .slide [class*="bg-orange-50"] .text-slate-500,
+.pres-mode .slide [class*="bg-blue-50"] .text-slate-500,
+.pres-mode .slide [class*="bg-emerald-50"] .text-slate-500,
+.pres-mode .slide [class*="bg-amber-50"] .text-slate-500,
+.pres-mode .slide [class*="bg-slate-50"] .text-slate-500 { color: #475569 !important; }
+.pres-mode .slide .comparison-yes { color: #166534 !important; }
+.pres-mode .slide .comparison-no { color: #991b1b !important; }
+.pres-mode .slide .comparison-partial { color: #92400e !important; }
+.pres-mode .slide table td,
+.pres-mode .slide table th { color: #0f172a !important; }
+.pres-mode .slide table thead th { color: #ffffff !important; background: #0f172a !important; }
+.pres-mode .slide table thead .bg-violet-800 { background: #5b21b6 !important; }
+.pres-mode .slide table { background: white; border-radius: 1rem; overflow: hidden; }
+.pres-mode .slide [class*="bg-orange-50"] p,
+.pres-mode .slide [class*="bg-blue-50"] p,
+.pres-mode .slide [class*="bg-emerald-50"] p,
+.pres-mode .slide [class*="bg-amber-50"] p,
+.pres-mode .slide [class*="bg-slate-50"] p,
+.pres-mode .slide [class*="bg-slate-50"] h4,
+.pres-mode .slide .feature-card p,
+.pres-mode .slide .feature-card h3,
+.pres-mode .slide .feature-card h4 { color: #0f172a !important; }
+.pres-mode .slide .feature-card .text-sm,
+.pres-mode .slide [class*="bg-orange-50"] .text-sm,
+.pres-mode .slide [class*="bg-blue-50"] .text-sm,
+.pres-mode .slide [class*="bg-emerald-50"] .text-sm,
+.pres-mode .slide [class*="bg-amber-50"] .text-sm,
+.pres-mode .slide [class*="bg-slate-50"] .text-sm,
+.pres-mode .slide [class*="bg-slate-50"] .text-xs { color: #475569 !important; }
+.pres-mode #guideSidebar { display: none !important; }
+.pres-mode #guideContent { margin-left: 0 !important; max-width: 100% !important; padding: 0 !important; }
+.pres-mode .slide { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 4rem; opacity: 0; transform: translateY(40px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.pres-mode .slide.slide-visible { opacity: 1; transform: translateY(0); }
+.pres-mode #presNav { display: flex !important; }
+.guide-mode #presNav { display: none !important; }
+.feature-card { transition: transform 0.2s, box-shadow 0.2s; }
+.feature-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+.step-card { counter-increment: step; position: relative; padding-left: 5rem !important; min-height: 2.5rem; }
+.step-card::before { content: counter(step); position: absolute; left: 1rem; top: 1rem; width: 2.5rem; height: 2.5rem; background: #7c3aed; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.875rem; }
+.comparison-yes { background: #dcfce7; color: #166534; }
+.comparison-no { background: #fee2e2; color: #991b1b; }
+.comparison-partial { background: #fef3c7; color: #92400e; }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.animate-in { animation: fadeInUp 0.6s ease-out forwards; }
+.nav-link.active { background: #7c3aed; color: white; }
+@media print { #guideSidebar, #modeToggle, #presNav { display: none !important; } #guideContent { margin-left: 0 !important; } }
+</style>
+</head>
+<body class="bg-white text-slate-800 guide-mode" id="appBody">
+
+<!-- Mode Toggle Button -->
+<div id="modeToggle" class="fixed top-4 right-4 z-50 flex items-center gap-2 bg-white border border-slate-200 rounded-2xl px-4 py-2 shadow-lg">
+    <button onclick="setMode('guide')" id="btnGuide" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-violet-600 text-white">User Guide</button>
+    <button onclick="setMode('pres')" id="btnPres" class="px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-slate-100 text-slate-600 hover:bg-slate-200">Presentation</button>
+</div>
+
+<!-- SIDEBAR NAVIGATION (Guide Mode) -->
+<aside id="guideSidebar" class="guide-only fixed top-0 left-0 h-full w-64 bg-slate-900 text-white overflow-y-auto z-40 pt-6 pb-20">
+    <div class="px-5 mb-6">
+        <h2 class="text-lg font-black tracking-tight">LMS Platform</h2>
+        <p class="text-[10px] text-slate-400 uppercase tracking-widest mt-1">User Guide</p>
+    </div>
+    <nav class="px-3 space-y-1" id="sideNav">
+        <a href="#overview" class="nav-link block px-3 py-2 rounded-xl text-xs font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-all">Platform Overview</a>
+        <a href="#getting-started" class="nav-link block px-3 py-2 rounded-xl text-xs font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-all">Getting Started</a>
+        <a href="#roles" class="nav-link block px-3 py-2 rounded-xl text-xs font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-all">User Roles</a>
+        <p class="px-3 pt-4 pb-1 text-[9px] font-black uppercase tracking-widest text-slate-500">Admin</p>
+        <a href="#admin-institutions" class="nav-link block px-3 py-2 rounded-xl text-xs font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-all">Managing Institutions</a>
+        <a href="#admin-accounts" class="nav-link block px-3 py-2 rounded-xl text-xs font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-all">Managing Accounts</a>
+        <a href="#admin-courses" class="nav-link block px-3 py-2 rounded-xl text-xs font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-all">Course Management</a>
+        <a href="#admin-ai" class="nav-link block px-3 py-2 rounded-xl text-xs font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-all">AI Content Generation</a>
+        <a href="#admin-assessments" class="nav-link block px-3 py-2 rounded-xl text-xs font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-all">Assessment Builder</a>
+        <a href="#admin-enrollments" class="nav-link block px-3 py-2 rounded-xl text-xs font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-all">Enrollments</a>
+        <p class="px-3 pt-4 pb-1 text-[9px] font-black uppercase tracking-widest text-slate-500">Teacher</p>
+        <a href="#teacher-dashboard" class="nav-link block px-3 py-2 rounded-xl text-xs font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-all">Teacher Dashboard</a>
+        <a href="#teacher-grading" class="nav-link block px-3 py-2 rounded-xl text-xs font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-all">Essay & Code Review</a>
+        <p class="px-3 pt-4 pb-1 text-[9px] font-black uppercase tracking-widest text-slate-500">Student</p>
+        <a href="#student-catalog" class="nav-link block px-3 py-2 rounded-xl text-xs font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-all">Course Catalog</a>
+        <a href="#student-learning" class="nav-link block px-3 py-2 rounded-xl text-xs font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-all">Learning Experience</a>
+        <a href="#student-assessments" class="nav-link block px-3 py-2 rounded-xl text-xs font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-all">Taking Assessments</a>
+        <a href="#student-certificates" class="nav-link block px-3 py-2 rounded-xl text-xs font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-all">Certificates</a>
+        <p class="px-3 pt-4 pb-1 text-[9px] font-black uppercase tracking-widest text-slate-500">Platform</p>
+        <a href="#security" class="nav-link block px-3 py-2 rounded-xl text-xs font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-all">Security</a>
+        <a href="#scalability" class="nav-link block px-3 py-2 rounded-xl text-xs font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-all">Scalability</a>
+        <a href="#comparison" class="nav-link block px-3 py-2 rounded-xl text-xs font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-all">Platform Comparison</a>
+        <a href="#faq" class="nav-link block px-3 py-2 rounded-xl text-xs font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-all">FAQ</a>
+    </nav>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main id="guideContent" class="ml-64 px-8 py-12 max-w-5xl mx-auto">
+
+<!-- ============================================================ -->
+<!-- SECTION: HERO / OVERVIEW -->
+<!-- ============================================================ -->
+<section id="overview" class="slide mb-16">
+    <div class="relative overflow-hidden rounded-3xl p-12 md:p-16 text-center" style="background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #312e81 100%);">
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 30% 70%, #6366f1, transparent 50%), radial-gradient(circle at 70% 30%, #3b82f6, transparent 50%);"></div>
+        <div class="relative">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-emerald-400 text-xs font-bold uppercase tracking-widest mb-6">
+                <span class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span> Next-Generation LMS
+            </div>
+            <h1 class="text-4xl md:text-6xl font-black text-white tracking-tight leading-tight mb-4">Learning Management<br>System Platform</h1>
+            <p class="text-lg text-slate-300 max-w-2xl mx-auto mb-8">An AI-powered, enterprise-grade learning platform designed for institutions that demand intelligent content creation, advanced assessments, and scalable infrastructure.</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <div class="px-5 py-3 rounded-2xl bg-white/5 border border-white/10 text-center">
+                    <p class="text-2xl font-black text-white">5</p>
+                    <p class="text-[10px] text-slate-400 uppercase tracking-widest">User Roles</p>
+                </div>
+                <div class="px-5 py-3 rounded-2xl bg-white/5 border border-white/10 text-center">
+                    <p class="text-2xl font-black text-violet-400">9</p>
+                    <p class="text-[10px] text-slate-400 uppercase tracking-widest">AI Features</p>
+                </div>
+                <div class="px-5 py-3 rounded-2xl bg-white/5 border border-white/10 text-center">
+                    <p class="text-2xl font-black text-emerald-400">4</p>
+                    <p class="text-[10px] text-slate-400 uppercase tracking-widest">Assessment Types</p>
+                </div>
+                <div class="px-5 py-3 rounded-2xl bg-white/5 border border-white/10 text-center">
+                    <p class="text-2xl font-black text-amber-400">10K+</p>
+                    <p class="text-[10px] text-slate-400 uppercase tracking-widest">Concurrent Users</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="guide-only mt-10">
+        <h2 class="text-2xl font-black text-slate-900 mb-4">What is this Platform?</h2>
+        <p class="text-slate-600 leading-relaxed mb-4">This Learning Management System (LMS) is a modern web-based platform that helps educational institutions create courses, manage students, deliver assessments, and issue certificates — all powered by artificial intelligence.</p>
+        <p class="text-slate-600 leading-relaxed mb-4">Unlike traditional LMS platforms, this system can <strong>automatically generate course content</strong>, <strong>create exam questions from lessons</strong>, <strong>grade essays and code submissions using AI</strong>, and <strong>produce visual slide presentations</strong> — dramatically reducing the time instructors spend on content creation.</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+            <div class="feature-card p-6 rounded-2xl border border-slate-200 bg-white">
+                <div class="h-12 w-12 rounded-2xl bg-violet-100 text-violet-600 flex items-center justify-center mb-4"><i class="fa-solid fa-wand-magic-sparkles text-xl"></i></div>
+                <h3 class="font-bold text-slate-900 mb-2">AI-Powered</h3>
+                <p class="text-sm text-slate-500">Content, assessments, slides, and grading all enhanced by AI</p>
+            </div>
+            <div class="feature-card p-6 rounded-2xl border border-slate-200 bg-white">
+                <div class="h-12 w-12 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center mb-4"><i class="fa-solid fa-building-columns text-xl"></i></div>
+                <h3 class="font-bold text-slate-900 mb-2">Multi-Institution</h3>
+                <p class="text-sm text-slate-500">Supports multiple organizations with isolated data and branding</p>
+            </div>
+            <div class="feature-card p-6 rounded-2xl border border-slate-200 bg-white">
+                <div class="h-12 w-12 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center mb-4"><i class="fa-solid fa-shield-halved text-xl"></i></div>
+                <h3 class="font-bold text-slate-900 mb-2">Enterprise Security</h3>
+                <p class="text-sm text-slate-500">JWT auth, encryption, rate limiting, XSS protection, and more</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION: GETTING STARTED -->
+<!-- ============================================================ -->
+<section id="getting-started" class="slide mb-16 guide-only">
+    <h2 class="text-3xl font-black text-slate-900 mb-6">Getting Started</h2>
+    <div class="bg-slate-50 rounded-2xl p-8 mb-8">
+        <h3 class="font-bold text-lg text-slate-900 mb-4"><i class="fa-solid fa-right-to-bracket text-violet-600 mr-2"></i>Logging In</h3>
+        <div class="space-y-4" style="counter-reset: step;">
+            <div class="step-card bg-white p-4 rounded-xl border border-slate-200">
+                <p class="font-bold text-slate-900 mb-1">Open the Platform URL</p>
+                <p class="text-sm text-slate-500">Your administrator will provide you with the web address (URL) to access the platform. Open it in any modern browser (Chrome, Firefox, Safari, or Edge).</p>
+            </div>
+            <div class="step-card bg-white p-4 rounded-xl border border-slate-200">
+                <p class="font-bold text-slate-900 mb-1">Enter Your Credentials</p>
+                <p class="text-sm text-slate-500">On the login page, enter your <strong>email address</strong> and <strong>password</strong>. These credentials are provided by your institution's administrator.</p>
+            </div>
+            <div class="step-card bg-white p-4 rounded-xl border border-slate-200">
+                <p class="font-bold text-slate-900 mb-1">Access Your Dashboard</p>
+                <p class="text-sm text-slate-500">After successful login, you'll be redirected to your personalized dashboard. The interface changes based on your role (Admin, Teacher, or Student).</p>
+            </div>
+        </div>
+    </div>
+    <div class="bg-amber-50 border border-amber-200 rounded-2xl p-6">
+        <p class="text-sm text-amber-800"><i class="fa-solid fa-lightbulb text-amber-500 mr-2"></i><strong>Tip:</strong> If you forget your password, contact your institution's administrator to reset it. For security, passwords are encrypted and cannot be retrieved — only reset.</p>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION: USER ROLES -->
+<!-- ============================================================ -->
+<section id="roles" class="slide mb-16">
+    <h2 class="text-3xl font-black text-slate-900 mb-2">User Roles</h2>
+    <p class="text-slate-500 mb-8 guide-only">The platform supports five distinct user roles, each with specific permissions and capabilities.</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div class="feature-card p-6 rounded-2xl border-2 border-violet-200 bg-violet-50/30">
+            <div class="flex items-center gap-3 mb-3">
+                <div class="h-10 w-10 rounded-xl bg-violet-600 text-white flex items-center justify-center"><i class="fa-solid fa-crown"></i></div>
+                <h3 class="font-black text-violet-900">Admin</h3>
+            </div>
+            <p class="text-sm text-slate-600 mb-3">Full system control. Manages institutions, all accounts, courses, enrollments, references, and teacher assignments.</p>
+            <ul class="text-xs text-slate-500 space-y-1">
+                <li><i class="fa-solid fa-check text-violet-500 mr-1"></i>Create & manage institutions</li>
+                <li><i class="fa-solid fa-check text-violet-500 mr-1"></i>Manage all user accounts</li>
+                <li><i class="fa-solid fa-check text-violet-500 mr-1"></i>Full course lifecycle control</li>
+                <li><i class="fa-solid fa-check text-violet-500 mr-1"></i>Bulk operations (import/enroll)</li>
+                <li><i class="fa-solid fa-check text-violet-500 mr-1"></i>System-wide visibility</li>
+            </ul>
+        </div>
+        <div class="feature-card p-6 rounded-2xl border-2 border-blue-200 bg-blue-50/30">
+            <div class="flex items-center gap-3 mb-3">
+                <div class="h-10 w-10 rounded-xl bg-blue-600 text-white flex items-center justify-center"><i class="fa-solid fa-user-tie"></i></div>
+                <h3 class="font-black text-blue-900">Staff</h3>
+            </div>
+            <p class="text-sm text-slate-600 mb-3">Institution-scoped account management. Can create and manage users within their own institution only.</p>
+            <ul class="text-xs text-slate-500 space-y-1">
+                <li><i class="fa-solid fa-check text-blue-500 mr-1"></i>Create teacher/student accounts</li>
+                <li><i class="fa-solid fa-check text-blue-500 mr-1"></i>Manage institution members</li>
+                <li><i class="fa-solid fa-check text-blue-500 mr-1"></i>Scoped to own institution</li>
+            </ul>
+        </div>
+        <div class="feature-card p-6 rounded-2xl border-2 border-emerald-200 bg-emerald-50/30">
+            <div class="flex items-center gap-3 mb-3">
+                <div class="h-10 w-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center"><i class="fa-solid fa-chalkboard-user"></i></div>
+                <h3 class="font-black text-emerald-900">Teacher</h3>
+            </div>
+            <p class="text-sm text-slate-600 mb-3">Monitors assigned courses, tracks student progress, reviews essay/code submissions, and identifies at-risk students.</p>
+            <ul class="text-xs text-slate-500 space-y-1">
+                <li><i class="fa-solid fa-check text-emerald-500 mr-1"></i>View assigned course content</li>
+                <li><i class="fa-solid fa-check text-emerald-500 mr-1"></i>Monitor student progress</li>
+                <li><i class="fa-solid fa-check text-emerald-500 mr-1"></i>Review & override AI grades</li>
+                <li><i class="fa-solid fa-check text-emerald-500 mr-1"></i>At-risk student detection</li>
+            </ul>
+        </div>
+        <div class="feature-card p-6 rounded-2xl border-2 border-amber-200 bg-amber-50/30">
+            <div class="flex items-center gap-3 mb-3">
+                <div class="h-10 w-10 rounded-xl bg-amber-600 text-white flex items-center justify-center"><i class="fa-solid fa-code"></i></div>
+                <h3 class="font-black text-amber-900">Developer</h3>
+            </div>
+            <p class="text-sm text-slate-600 mb-3">Course content creator. Has full access to course building tools including AI generation, but limited to own content.</p>
+            <ul class="text-xs text-slate-500 space-y-1">
+                <li><i class="fa-solid fa-check text-amber-500 mr-1"></i>Create & edit courses</li>
+                <li><i class="fa-solid fa-check text-amber-500 mr-1"></i>AI content generation</li>
+                <li><i class="fa-solid fa-check text-amber-500 mr-1"></i>Build assessments</li>
+            </ul>
+        </div>
+        <div class="feature-card p-6 rounded-2xl border-2 border-rose-200 bg-rose-50/30">
+            <div class="flex items-center gap-3 mb-3">
+                <div class="h-10 w-10 rounded-xl bg-rose-600 text-white flex items-center justify-center"><i class="fa-solid fa-graduation-cap"></i></div>
+                <h3 class="font-black text-rose-900">Student</h3>
+            </div>
+            <p class="text-sm text-slate-600 mb-3">Browses courses, enrolls, learns content, takes mixed assessments (MCQ + essay + code), and earns certificates.</p>
+            <ul class="text-xs text-slate-500 space-y-1">
+                <li><i class="fa-solid fa-check text-rose-500 mr-1"></i>Browse & self-enroll in courses</li>
+                <li><i class="fa-solid fa-check text-rose-500 mr-1"></i>Read lessons & watch videos</li>
+                <li><i class="fa-solid fa-check text-rose-500 mr-1"></i>Take mixed assessments</li>
+                <li><i class="fa-solid fa-check text-rose-500 mr-1"></i>Track progress & earn certificates</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION: ADMIN - INSTITUTIONS -->
+<!-- ============================================================ -->
+<section id="admin-institutions" class="slide mb-16 guide-only">
+    <h2 class="text-3xl font-black text-slate-900 mb-2">Managing Institutions</h2>
+    <p class="text-slate-500 mb-6">Institutions are the organizational units of the platform. Each institution has its own branding, members, and courses.</p>
+    <div class="space-y-4" style="counter-reset: step;">
+        <div class="step-card bg-white p-5 rounded-xl border border-slate-200">
+            <p class="font-bold text-slate-900 mb-1">Navigate to Institutions</p>
+            <p class="text-sm text-slate-500">From the Admin sidebar, click <strong>"Institutions"</strong> to open the institution management panel.</p>
+        </div>
+        <div class="step-card bg-white p-5 rounded-xl border border-slate-200">
+            <p class="font-bold text-slate-900 mb-1">Create a New Institution</p>
+            <p class="text-sm text-slate-500">Click <strong>"Add Institution"</strong> and fill in: Name, Code (short uppercase identifier), Type, Region, Contact details. You can also pin a location on the map.</p>
+        </div>
+        <div class="step-card bg-white p-5 rounded-xl border border-slate-200">
+            <p class="font-bold text-slate-900 mb-1">Upload or Generate a Logo</p>
+            <p class="text-sm text-slate-500">Upload your institution's logo, or click <strong>"AI Generate Logo"</strong> to have the platform create 3 professional logo options based on your institution's name and type.</p>
+        </div>
+        <div class="step-card bg-white p-5 rounded-xl border border-slate-200">
+            <p class="font-bold text-slate-900 mb-1">Manage Institution Status</p>
+            <p class="text-sm text-slate-500">Toggle an institution's active status. <strong>Deactivating an institution blocks all its members from logging in</strong> — useful for compliance or suspension scenarios.</p>
+        </div>
+    </div>
+    <div class="mt-6 p-5 rounded-2xl bg-violet-50 border border-violet-200">
+        <p class="text-sm text-violet-800"><i class="fa-solid fa-wand-magic-sparkles text-violet-500 mr-2"></i><strong>AI Feature:</strong> The platform can generate professional logos using AI. It creates 3 options for you to choose from — no graphic designer needed.</p>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION: ADMIN - ACCOUNTS -->
+<!-- ============================================================ -->
+<section id="admin-accounts" class="slide mb-16 guide-only">
+    <h2 class="text-3xl font-black text-slate-900 mb-2">Managing Accounts</h2>
+    <p class="text-slate-500 mb-6">Create and manage user accounts for all roles. Supports individual creation and bulk import from Excel files.</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="p-5 rounded-2xl border border-slate-200">
+            <h4 class="font-bold text-slate-900 mb-3"><i class="fa-solid fa-user-plus text-blue-500 mr-2"></i>Individual Creation</h4>
+            <ol class="text-sm text-slate-600 space-y-2 list-decimal list-inside">
+                <li>Click "Add Account"</li>
+                <li>Enter email, full name, and select a role</li>
+                <li>Assign to an institution (optional for admin role)</li>
+                <li>Set a temporary password</li>
+                <li>Click Save</li>
+            </ol>
+        </div>
+        <div class="p-5 rounded-2xl border border-slate-200">
+            <h4 class="font-bold text-slate-900 mb-3"><i class="fa-solid fa-file-excel text-emerald-500 mr-2"></i>Bulk Import</h4>
+            <ol class="text-sm text-slate-600 space-y-2 list-decimal list-inside">
+                <li>Download the Excel template</li>
+                <li>Fill in rows: email, name, role, institution code</li>
+                <li>Click "Import" and select your file</li>
+                <li>Review the preview table</li>
+                <li>Confirm to create all accounts</li>
+            </ol>
+        </div>
+    </div>
+    <div class="bg-amber-50 border border-amber-200 rounded-2xl p-5">
+        <p class="text-sm text-amber-800"><i class="fa-solid fa-shield-halved text-amber-500 mr-2"></i><strong>Security:</strong> All passwords are encrypted using BCrypt (work factor 12) before storage. Even administrators cannot see user passwords — they can only reset them.</p>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION: ADMIN - COURSES -->
+<!-- ============================================================ -->
+<section id="admin-courses" class="slide mb-16">
+    <h2 class="text-3xl font-black text-slate-900 mb-2">Course Management</h2>
+    <p class="text-slate-500 mb-6 guide-only">Courses are the core of the platform. They consist of modules (chapters) which contain sections (lessons).</p>
+    <div class="guide-only">
+        <h3 class="font-bold text-lg text-slate-900 mb-4">Course Structure</h3>
+        <div class="flex items-center gap-3 mb-6 flex-wrap">
+            <div class="px-4 py-2 rounded-xl bg-violet-100 text-violet-800 text-sm font-bold">Course</div>
+            <i class="fa-solid fa-arrow-right text-slate-300"></i>
+            <div class="px-4 py-2 rounded-xl bg-blue-100 text-blue-800 text-sm font-bold">Modules</div>
+            <i class="fa-solid fa-arrow-right text-slate-300"></i>
+            <div class="px-4 py-2 rounded-xl bg-emerald-100 text-emerald-800 text-sm font-bold">Sections (Lessons)</div>
+        </div>
+        <div class="space-y-4" style="counter-reset: step;">
+            <div class="step-card bg-white p-5 rounded-xl border border-slate-200">
+                <p class="font-bold text-slate-900 mb-1">Create a Course</p>
+                <p class="text-sm text-slate-500">Click "Add Course" → Enter title, code, description, objectives, sector, qualification level, and duration hours. The AI can auto-generate descriptions and objectives for you.</p>
+            </div>
+            <div class="step-card bg-white p-5 rounded-xl border border-slate-200">
+                <p class="font-bold text-slate-900 mb-1">Add Modules</p>
+                <p class="text-sm text-slate-500">Inside the course, add modules manually or click <strong>"AI Generate"</strong> to automatically create a module structure based on your course description. Drag and drop to reorder.</p>
+            </div>
+            <div class="step-card bg-white p-5 rounded-xl border border-slate-200">
+                <p class="font-bold text-slate-900 mb-1">Build Content</p>
+                <p class="text-sm text-slate-500">For each module, add lessons using the rich text editor (WYSIWYG). Or use the <strong>2-pass AI generation</strong>: first it creates an outline, then writes full HTML content for each section.</p>
+            </div>
+            <div class="step-card bg-white p-5 rounded-xl border border-slate-200">
+                <p class="font-bold text-slate-900 mb-1">Publish</p>
+                <p class="text-sm text-slate-500">Once content is ready, publish the course to make it available to students. Set visibility: Public (all students), Institution (same institution), or Private (enrolled only).</p>
+            </div>
+        </div>
+    </div>
+    <div class="pres-only text-center max-w-5xl mx-auto">
+        <h3 class="text-2xl font-black mb-8">Course Lifecycle</h3>
+        <div class="inline-flex items-center gap-4 text-lg mb-10">
+            <span class="px-8 py-4 rounded-2xl bg-amber-100 font-bold text-base" style="color: #92400e !important;">Draft</span>
+            <i class="fa-solid fa-arrow-right text-slate-400 text-xl"></i>
+            <span class="px-8 py-4 rounded-2xl bg-emerald-100 font-bold text-base" style="color: #166534 !important;">Published</span>
+            <i class="fa-solid fa-arrow-right text-slate-400 text-xl"></i>
+            <span class="px-8 py-4 rounded-2xl bg-slate-200 font-bold text-base" style="color: #334155 !important;">Archived</span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left mt-4">
+            <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200">
+                <i class="fa-solid fa-layer-group text-violet-500 text-2xl mb-3"></i>
+                <h4 class="font-bold text-slate-900 text-base mb-2">Hierarchical Structure</h4>
+                <p class="text-sm text-slate-500">Courses contain Modules, which contain Sections (lessons). Drag-and-drop reordering at every level.</p>
+            </div>
+            <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200">
+                <i class="fa-solid fa-eye text-blue-500 text-2xl mb-3"></i>
+                <h4 class="font-bold text-slate-900 text-base mb-2">Visibility Controls</h4>
+                <p class="text-sm text-slate-500">Public (all students), Institution-only (same org), or Private (enrollment required). Fine-grained access.</p>
+            </div>
+            <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200">
+                <i class="fa-solid fa-file-pdf text-rose-500 text-2xl mb-3"></i>
+                <h4 class="font-bold text-slate-900 text-base mb-2">PDF Export</h4>
+                <p class="text-sm text-slate-500">Download entire courses or individual modules as formatted PDF documents for offline use.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION: AI CONTENT GENERATION -->
+<!-- ============================================================ -->
+<section id="admin-ai" class="slide mb-16">
+    <h2 class="text-3xl font-black text-slate-900 mb-2">AI-Powered Content Generation</h2>
+    <p class="text-slate-500 mb-8">The platform's AI capabilities dramatically reduce course creation time from weeks to hours.</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="feature-card p-6 rounded-2xl border border-violet-200 bg-gradient-to-br from-violet-50 to-white">
+            <div class="h-10 w-10 rounded-xl bg-violet-600 text-white flex items-center justify-center mb-3"><i class="fa-solid fa-sitemap"></i></div>
+            <h4 class="font-bold text-slate-900 mb-2">Module Outline Generation</h4>
+            <p class="text-sm text-slate-500">AI analyzes your course description and generates a structured module outline with titles and learning objectives. One click to create your entire course skeleton.</p>
+        </div>
+        <div class="feature-card p-6 rounded-2xl border border-blue-200 bg-gradient-to-br from-blue-50 to-white">
+            <div class="h-10 w-10 rounded-xl bg-blue-600 text-white flex items-center justify-center mb-3"><i class="fa-solid fa-file-lines"></i></div>
+            <h4 class="font-bold text-slate-900 mb-2">Full Lesson Content</h4>
+            <p class="text-sm text-slate-500">Two-pass AI system: first generates lesson outlines with briefs, then writes complete HTML content (500-900 words) for each section with proper structure, examples, and code blocks.</p>
+        </div>
+        <div class="feature-card p-6 rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-50 to-white">
+            <div class="h-10 w-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center mb-3"><i class="fa-solid fa-image"></i></div>
+            <h4 class="font-bold text-slate-900 mb-2">Thumbnails & Visuals</h4>
+            <p class="text-sm text-slate-500">AI generates unique thumbnail images for each module and background images for slide presentations using Stable Image technology.</p>
+        </div>
+        <div class="feature-card p-6 rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 to-white">
+            <div class="h-10 w-10 rounded-xl bg-amber-600 text-white flex items-center justify-center mb-3"><i class="fa-solid fa-file-powerpoint"></i></div>
+            <h4 class="font-bold text-slate-900 mb-2">Slide Deck Generation</h4>
+            <p class="text-sm text-slate-500">Automatically creates visual slide presentations from lesson content. AI designs the layout, generates background images, and renders a PDF slide deck you can present or share.</p>
+        </div>
+        <div class="feature-card p-6 rounded-2xl border border-rose-200 bg-gradient-to-br from-rose-50 to-white">
+            <div class="h-10 w-10 rounded-xl bg-rose-600 text-white flex items-center justify-center mb-3"><i class="fa-solid fa-circle-question"></i></div>
+            <h4 class="font-bold text-slate-900 mb-2">MCQ Exam Questions</h4>
+            <p class="text-sm text-slate-500">AI reads your lesson content and generates multiple-choice questions with options, correct answers, and explanations. Automatically deduplicates to avoid repeats.</p>
+        </div>
+        <div class="feature-card p-6 rounded-2xl border border-indigo-200 bg-gradient-to-br from-indigo-50 to-white">
+            <div class="h-10 w-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center mb-3"><i class="fa-solid fa-file-pen"></i></div>
+            <h4 class="font-bold text-slate-900 mb-2">Essay/Activity/Code Items</h4>
+            <p class="text-sm text-slate-500">AI analyzes content type and generates appropriate items: essays for theory, activities for procedures, code challenges for programming — each with a structured grading rubric.</p>
+        </div>
+    </div>
+    <div class="guide-only mt-8 p-6 rounded-2xl bg-slate-900 text-white">
+        <h4 class="font-bold text-lg mb-3"><i class="fa-solid fa-bolt text-amber-400 mr-2"></i>How AI Generation Works</h4>
+        <ol class="text-sm text-slate-300 space-y-3 list-decimal list-inside">
+            <li><strong class="text-white">Select sections</strong> — Choose which lesson sections to generate from (checkboxes in the left panel)</li>
+            <li><strong class="text-white">Choose generation mode</strong> — MCQ Only, Essay/Activity/Code, or Auto (Both)</li>
+            <li><strong class="text-white">Click Generate</strong> — AI processes each section in parallel for speed</li>
+            <li><strong class="text-white">Review results</strong> — Items appear in the right panel. Edit, delete, or keep as-is</li>
+            <li><strong class="text-white">Items are ready</strong> — They're automatically added to your assessment item bank</li>
+        </ol>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION: ASSESSMENT BUILDER -->
+<!-- ============================================================ -->
+<section id="admin-assessments" class="slide mb-16">
+    <h2 class="text-3xl font-black text-slate-900 mb-2">Assessment Builder</h2>
+    <p class="text-slate-500 mb-6">Create mixed assessments that combine multiple question types in a single exam.</p>
+    <div class="guide-only space-y-4" style="counter-reset: step;">
+        <div class="step-card bg-white p-5 rounded-xl border border-slate-200">
+            <p class="font-bold text-slate-900 mb-1">Create an Assessment</p>
+            <p class="text-sm text-slate-500">Set title, description, total items, passing score (%), time limit (optional), and maximum attempts allowed.</p>
+        </div>
+        <div class="step-card bg-white p-5 rounded-xl border border-slate-200">
+            <p class="font-bold text-slate-900 mb-1">Assign Source Modules</p>
+            <p class="text-sm text-slate-500">Choose which modules contribute questions. Set <strong>weights</strong> to control how many items come from each module (proportional distribution).</p>
+        </div>
+        <div class="step-card bg-white p-5 rounded-xl border border-slate-200">
+            <p class="font-bold text-slate-900 mb-1">Mixed Item Types</p>
+            <p class="text-sm text-slate-500">The assessment pulls from <strong>all item types</strong> in the bank: MCQ, Essay, Activity, and Code. Students get a mix based on what's available in the assigned modules.</p>
+        </div>
+        <div class="step-card bg-white p-5 rounded-xl border border-slate-200">
+            <p class="font-bold text-slate-900 mb-1">Publish</p>
+            <p class="text-sm text-slate-500">Set status to "Published" to make it available to enrolled students. Items are randomly selected each attempt, so no two attempts are identical.</p>
+        </div>
+    </div>
+    <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="text-center p-6 rounded-2xl bg-orange-50 border border-orange-200">
+            <i class="fa-solid fa-circle-question text-orange-500 text-4xl mb-3"></i>
+            <p class="text-base font-bold text-slate-900">Multiple Choice</p>
+            <p class="text-sm text-slate-500">Auto-graded instantly</p>
+        </div>
+        <div class="text-center p-6 rounded-2xl bg-blue-50 border border-blue-200">
+            <i class="fa-solid fa-pen-fancy text-blue-500 text-4xl mb-3"></i>
+            <p class="text-base font-bold text-slate-900">Essay</p>
+            <p class="text-sm text-slate-500">AI + teacher grading</p>
+        </div>
+        <div class="text-center p-6 rounded-2xl bg-emerald-50 border border-emerald-200">
+            <i class="fa-solid fa-clipboard-list text-emerald-500 text-4xl mb-3"></i>
+            <p class="text-base font-bold text-slate-900">Activity</p>
+            <p class="text-sm text-slate-500">Technical procedures</p>
+        </div>
+        <div class="text-center p-6 rounded-2xl bg-amber-50 border border-amber-200">
+            <i class="fa-solid fa-code text-amber-600 text-4xl mb-3"></i>
+            <p class="text-base font-bold text-slate-900">Code</p>
+            <p class="text-sm text-slate-500">Programming challenges</p>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION: ADMIN - ENROLLMENTS -->
+<!-- ============================================================ -->
+<section id="admin-enrollments" class="slide mb-16 guide-only">
+    <h2 class="text-3xl font-black text-slate-900 mb-2">Managing Enrollments</h2>
+    <p class="text-slate-500 mb-6">Enroll students in courses individually or in bulk. Track enrollment status and progress.</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="p-5 rounded-2xl border border-slate-200">
+            <h4 class="font-bold text-slate-900 mb-3"><i class="fa-solid fa-user-plus text-violet-500 mr-2"></i>Single Enrollment</h4>
+            <p class="text-sm text-slate-500">Select a student and a course, then click Enroll. The system automatically creates progress tracking records for all modules.</p>
+        </div>
+        <div class="p-5 rounded-2xl border border-slate-200">
+            <h4 class="font-bold text-slate-900 mb-3"><i class="fa-solid fa-users text-violet-500 mr-2"></i>Bulk Enrollment</h4>
+            <p class="text-sm text-slate-500">Select multiple students × multiple courses in a matrix. The system creates all combinations, skipping duplicates automatically.</p>
+        </div>
+    </div>
+    <div class="mt-6 p-5 rounded-2xl bg-blue-50 border border-blue-200">
+        <h4 class="font-bold text-sm text-blue-900 mb-2">Enrollment Statuses</h4>
+        <div class="flex flex-wrap gap-3">
+            <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold">Active</span>
+            <span class="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-bold">Completed</span>
+            <span class="px-3 py-1 rounded-full bg-amber-100 text-amber-700 text-xs font-bold">Suspended</span>
+            <span class="px-3 py-1 rounded-full bg-rose-100 text-rose-700 text-xs font-bold">Dropped</span>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION: TEACHER DASHBOARD -->
+<!-- ============================================================ -->
+<section id="teacher-dashboard" class="slide mb-16 guide-only">
+    <h2 class="text-3xl font-black text-slate-900 mb-2">Teacher Dashboard</h2>
+    <p class="text-slate-500 mb-6">Teachers see their assigned courses and can monitor every enrolled student's progress.</p>
+    <div class="space-y-4" style="counter-reset: step;">
+        <div class="step-card bg-white p-5 rounded-xl border border-slate-200">
+            <p class="font-bold text-slate-900 mb-1">View Assigned Courses</p>
+            <p class="text-sm text-slate-500">Your dashboard shows all courses assigned to you by the admin. Click any course to view its content (read-only), modules, and slide decks.</p>
+        </div>
+        <div class="step-card bg-white p-5 rounded-xl border border-slate-200">
+            <p class="font-bold text-slate-900 mb-1">Monitor Students</p>
+            <p class="text-sm text-slate-500">Click "Students" on any course to see enrolled students with progress bars, assessment scores, and completion status.</p>
+        </div>
+        <div class="step-card bg-white p-5 rounded-xl border border-slate-200">
+            <p class="font-bold text-slate-900 mb-1">Student Tracker</p>
+            <p class="text-sm text-slate-500">The consolidated Student Tracker shows all your students across all courses. It automatically flags <strong>at-risk students</strong> based on: low progress, suspended status, or failed all assessment attempts.</p>
+        </div>
+        <div class="step-card bg-white p-5 rounded-xl border border-slate-200">
+            <p class="font-bold text-slate-900 mb-1">View Assessment Details</p>
+            <p class="text-sm text-slate-500">Click any student to see their per-question answers across all attempts — including which MCQ they got right/wrong and their essay responses.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION: TEACHER - ESSAY GRADING -->
+<!-- ============================================================ -->
+<section id="teacher-grading" class="slide mb-16 guide-only">
+    <h2 class="text-3xl font-black text-slate-900 mb-2">Essay & Code Review</h2>
+    <p class="text-slate-500 mb-6">The platform's AI automatically grades essay, activity, and code submissions. Teachers can review and override any score.</p>
+    <div class="space-y-4" style="counter-reset: step;">
+        <div class="step-card bg-white p-5 rounded-xl border border-slate-200">
+            <p class="font-bold text-slate-900 mb-1">Navigate to Essay Review</p>
+            <p class="text-sm text-slate-500">On the Teacher Dashboard, find the <strong>"Essay & Activity Review"</strong> section. It shows all submissions across your assigned courses.</p>
+        </div>
+        <div class="step-card bg-white p-5 rounded-xl border border-slate-200">
+            <p class="font-bold text-slate-900 mb-1">Filter by Status</p>
+            <p class="text-sm text-slate-500">Filter submissions by grading status: Pending (not yet graded), AI Graded (needs review), or Teacher Reviewed (already overridden).</p>
+        </div>
+        <div class="step-card bg-white p-5 rounded-xl border border-slate-200">
+            <p class="font-bold text-slate-900 mb-1">Review AI Grading</p>
+            <p class="text-sm text-slate-500">Click any submission to see: the student's full response, AI score, per-criterion rubric breakdown (with individual scores and comments), and AI feedback.</p>
+        </div>
+        <div class="step-card bg-white p-5 rounded-xl border border-slate-200">
+            <p class="font-bold text-slate-900 mb-1">Override Score (Optional)</p>
+            <p class="text-sm text-slate-500">If you disagree with the AI's assessment, enter your own score (0 to max points) and feedback. The attempt score automatically recalculates using your override.</p>
+        </div>
+    </div>
+    <div class="mt-6 p-5 rounded-2xl bg-emerald-50 border border-emerald-200">
+        <p class="text-sm text-emerald-800"><i class="fa-solid fa-gavel text-emerald-500 mr-2"></i><strong>Teacher Authority:</strong> The teacher's score always takes precedence over AI grading. The AI is a first-pass assistant — final authority rests with the instructor.</p>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION: STUDENT - CATALOG -->
+<!-- ============================================================ -->
+<section id="student-catalog" class="slide mb-16 guide-only">
+    <h2 class="text-3xl font-black text-slate-900 mb-2">Course Catalog</h2>
+    <p class="text-slate-500 mb-6">Students can browse available courses and self-enroll.</p>
+    <div class="space-y-4" style="counter-reset: step;">
+        <div class="step-card bg-white p-5 rounded-xl border border-slate-200">
+            <p class="font-bold text-slate-900 mb-1">Browse Available Courses</p>
+            <p class="text-sm text-slate-500">Click <strong>"Course Catalog"</strong> in the sidebar. You'll see course cards with titles, descriptions, sector tags, and duration.</p>
+        </div>
+        <div class="step-card bg-white p-5 rounded-xl border border-slate-200">
+            <p class="font-bold text-slate-900 mb-1">Filter and Search</p>
+            <p class="text-sm text-slate-500">Use the search bar to find specific courses. Filter by institution if multiple are available.</p>
+        </div>
+        <div class="step-card bg-white p-5 rounded-xl border border-slate-200">
+            <p class="font-bold text-slate-900 mb-1">Self-Enroll</p>
+            <p class="text-sm text-slate-500">Click <strong>"Enroll"</strong> on any available course. You'll be immediately enrolled and can start learning. Some courses may be restricted to your institution only.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION: STUDENT - LEARNING -->
+<!-- ============================================================ -->
+<section id="student-learning" class="slide mb-16 guide-only">
+    <h2 class="text-3xl font-black text-slate-900 mb-2">Learning Experience</h2>
+    <p class="text-slate-500 mb-6">The course reader provides a clean, focused learning environment.</p>
+    <div class="space-y-4" style="counter-reset: step;">
+        <div class="step-card bg-white p-5 rounded-xl border border-slate-200">
+            <p class="font-bold text-slate-900 mb-1">Open a Course</p>
+            <p class="text-sm text-slate-500">From "My Learning", click any enrolled course card. The course opens in a two-panel layout: module list on the left, content on the right.</p>
+        </div>
+        <div class="step-card bg-white p-5 rounded-xl border border-slate-200">
+            <p class="font-bold text-slate-900 mb-1">Navigate Modules & Sections</p>
+            <p class="text-sm text-slate-500">Click any module in the left sidebar to view its sections. Use the Previous/Next buttons at the bottom to move between sections within a module.</p>
+        </div>
+        <div class="step-card bg-white p-5 rounded-xl border border-slate-200">
+            <p class="font-bold text-slate-900 mb-1">Content Types</p>
+            <p class="text-sm text-slate-500">Sections can contain: rich text lessons, embedded videos (YouTube), downloadable files, or external links. The content area adapts to the type automatically.</p>
+        </div>
+        <div class="step-card bg-white p-5 rounded-xl border border-slate-200">
+            <p class="font-bold text-slate-900 mb-1">Mark as Complete</p>
+            <p class="text-sm text-slate-500">After reading a module's content, click <strong>"Mark as Complete"</strong>. Your progress updates automatically. The progress ring on your course card shows overall completion.</p>
+        </div>
+        <div class="step-card bg-white p-5 rounded-xl border border-slate-200">
+            <p class="font-bold text-slate-900 mb-1">Assessments Tab</p>
+            <p class="text-sm text-slate-500">Switch to the <strong>"Assessments"</strong> tab in the sidebar to see and take exams for this course, or view your past attempt grades.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION: STUDENT - ASSESSMENTS -->
+<!-- ============================================================ -->
+<section id="student-assessments" class="slide mb-16">
+    <h2 class="text-3xl font-black text-slate-900 mb-2">Taking Assessments</h2>
+    <p class="text-slate-500 mb-6">Assessments combine MCQ, essay, activity, and code questions in a single exam with one-at-a-time navigation.</p>
+    <div class="guide-only space-y-4" style="counter-reset: step;">
+        <div class="step-card bg-white p-5 rounded-xl border border-slate-200">
+            <p class="font-bold text-slate-900 mb-1">Start an Assessment</p>
+            <p class="text-sm text-slate-500">Click <strong>"Take"</strong> on any available assessment. The exam opens in a full-screen modal with a timer (if time-limited).</p>
+        </div>
+        <div class="step-card bg-white p-5 rounded-xl border border-slate-200">
+            <p class="font-bold text-slate-900 mb-1">Answer Questions One at a Time</p>
+            <p class="text-sm text-slate-500">Each question is shown individually. For MCQ: click an option. For essay/activity: type in the text area. For code: write your solution in the code editor. Navigate using Previous/Next or the numbered dots at the top.</p>
+        </div>
+        <div class="step-card bg-white p-5 rounded-xl border border-slate-200">
+            <p class="font-bold text-slate-900 mb-1">Submit</p>
+            <p class="text-sm text-slate-500">Click <strong>"Submit All"</strong> when ready. MCQ items are graded instantly. Essay/activity/code items are evaluated by the platform's grading system — results appear shortly after.</p>
+        </div>
+        <div class="step-card bg-white p-5 rounded-xl border border-slate-200">
+            <p class="font-bold text-slate-900 mb-1">Review Results</p>
+            <p class="text-sm text-slate-500">Click <strong>"View Grades"</strong> to see all your attempts. Click any attempt to review each item: see which MCQ you got right/wrong (with explanations), and view rubric-based feedback for essay/code items.</p>
+        </div>
+    </div>
+    <div class="pres-only grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl">
+        <div class="p-6 rounded-2xl bg-white/10 border border-white/20">
+            <h4 class="font-bold text-lg mb-3"><i class="fa-solid fa-bolt text-amber-400 mr-2"></i>Instant Grading</h4>
+            <p class="text-sm text-slate-300">MCQ items graded in milliseconds. Point-based scoring with weighted items.</p>
+        </div>
+        <div class="p-6 rounded-2xl bg-white/10 border border-white/20">
+            <h4 class="font-bold text-lg mb-3"><i class="fa-solid fa-brain text-violet-400 mr-2"></i>AI Evaluation</h4>
+            <p class="text-sm text-slate-300">Essay, activity, and code responses evaluated against structured rubrics with per-criterion scoring.</p>
+        </div>
+        <div class="p-6 rounded-2xl bg-white/10 border border-white/20">
+            <h4 class="font-bold text-lg mb-3"><i class="fa-solid fa-shield-halved text-emerald-400 mr-2"></i>Tamper-Proof</h4>
+            <p class="text-sm text-slate-300">Questions snapshotted at attempt start. Edits to the item bank don't affect in-progress exams.</p>
+        </div>
+        <div class="p-6 rounded-2xl bg-white/10 border border-white/20">
+            <h4 class="font-bold text-lg mb-3"><i class="fa-solid fa-lock text-rose-400 mr-2"></i>Injection Protected</h4>
+            <p class="text-sm text-slate-300">AI grading includes prompt injection protection — students cannot manipulate scoring via text tricks.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION: CERTIFICATES -->
+<!-- ============================================================ -->
+<section id="student-certificates" class="slide mb-16 guide-only">
+    <h2 class="text-3xl font-black text-slate-900 mb-2">Certificates</h2>
+    <p class="text-slate-500 mb-6">Earn a professional PDF certificate upon completing all modules and passing all assessments.</p>
+    <div class="space-y-4" style="counter-reset: step;">
+        <div class="step-card bg-white p-5 rounded-xl border border-slate-200">
+            <p class="font-bold text-slate-900 mb-1">Complete All Requirements</p>
+            <p class="text-sm text-slate-500">Mark all modules as complete AND pass all published assessments for the course. The system automatically detects when you've met all requirements.</p>
+        </div>
+        <div class="step-card bg-white p-5 rounded-xl border border-slate-200">
+            <p class="font-bold text-slate-900 mb-1">Download Certificate</p>
+            <p class="text-sm text-slate-500">Once completed, a download button appears on your course card. Click it to generate and download your personalized PDF certificate.</p>
+        </div>
+        <div class="step-card bg-white p-5 rounded-xl border border-slate-200">
+            <p class="font-bold text-slate-900 mb-1">Verify Authenticity</p>
+            <p class="text-sm text-slate-500">Each certificate includes a <strong>QR code</strong> that anyone can scan to verify its authenticity — no login required. The verification page confirms the student's name, course, and completion date.</p>
+        </div>
+    </div>
+    <div class="mt-6 p-5 rounded-2xl border border-slate-200 bg-slate-50">
+        <h4 class="font-bold text-sm text-slate-900 mb-2">Certificate Includes:</h4>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-3 text-xs text-slate-600">
+            <span><i class="fa-solid fa-check text-emerald-500 mr-1"></i>Institution logo & name</span>
+            <span><i class="fa-solid fa-check text-emerald-500 mr-1"></i>Student full name</span>
+            <span><i class="fa-solid fa-check text-emerald-500 mr-1"></i>Course title</span>
+            <span><i class="fa-solid fa-check text-emerald-500 mr-1"></i>Training hours</span>
+            <span><i class="fa-solid fa-check text-emerald-500 mr-1"></i>Sector & qualification level</span>
+            <span><i class="fa-solid fa-check text-emerald-500 mr-1"></i>Unique certificate ID</span>
+            <span><i class="fa-solid fa-check text-emerald-500 mr-1"></i>QR verification code</span>
+            <span><i class="fa-solid fa-check text-emerald-500 mr-1"></i>Issue date</span>
+            <span><i class="fa-solid fa-check text-emerald-500 mr-1"></i>Gold-bordered design</span>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION: SECURITY -->
+<!-- ============================================================ -->
+<section id="security" class="slide mb-16">
+    <h2 class="text-3xl font-black text-slate-900 mb-2">Security Architecture</h2>
+    <p class="text-slate-500 mb-8">Enterprise-grade security built into every layer of the platform.</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="p-5 rounded-2xl border border-slate-200">
+            <h4 class="font-bold text-slate-900 mb-2"><i class="fa-solid fa-key text-violet-500 mr-2"></i>Authentication</h4>
+            <ul class="text-sm text-slate-500 space-y-1.5">
+                <li>• JWT-based stateless tokens (24h expiry)</li>
+                <li>• httpOnly cookies (XSS-safe)</li>
+                <li>• SameSite=Lax (CSRF protection)</li>
+                <li>• BCrypt password hashing (work factor 12)</li>
+            </ul>
+        </div>
+        <div class="p-5 rounded-2xl border border-slate-200">
+            <h4 class="font-bold text-slate-900 mb-2"><i class="fa-solid fa-user-shield text-blue-500 mr-2"></i>Access Control</h4>
+            <ul class="text-sm text-slate-500 space-y-1.5">
+                <li>• Role-based permissions on every endpoint</li>
+                <li>• Institution-scoped data isolation</li>
+                <li>• Institution deactivation blocks all members</li>
+                <li>• Protected static file serving (JS/CSS)</li>
+            </ul>
+        </div>
+        <div class="p-5 rounded-2xl border border-slate-200">
+            <h4 class="font-bold text-slate-900 mb-2"><i class="fa-solid fa-shield-virus text-emerald-500 mr-2"></i>Input Protection</h4>
+            <ul class="text-sm text-slate-500 space-y-1.5">
+                <li>• HTML sanitization (nh3) prevents Stored XSS</li>
+                <li>• Rate limiting on login (5 req/min per IP)</li>
+                <li>• Input length truncation (50K char limit)</li>
+                <li>• Parameterized SQL queries (no injection)</li>
+            </ul>
+        </div>
+        <div class="p-5 rounded-2xl border border-slate-200">
+            <h4 class="font-bold text-slate-900 mb-2"><i class="fa-solid fa-robot text-amber-500 mr-2"></i>AI Safety</h4>
+            <ul class="text-sm text-slate-500 space-y-1.5">
+                <li>• Prompt injection detection & filtering</li>
+                <li>• Student responses sanitized before AI evaluation</li>
+                <li>• Score caps (AI cannot exceed max points)</li>
+                <li>• Structured prompts with clear boundaries</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION: SCALABILITY -->
+<!-- ============================================================ -->
+<section id="scalability" class="slide mb-16">
+    <h2 class="text-3xl font-black text-slate-900 mb-2">Scalability & Architecture</h2>
+    <p class="text-slate-500 mb-8">Designed for 10,000+ concurrent users with modern async architecture.</p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+        <div class="text-center p-6 rounded-2xl bg-slate-50 border border-slate-200">
+            <i class="fa-solid fa-bolt text-violet-500 text-3xl mb-3"></i>
+            <h4 class="font-bold text-slate-900 mb-1">Async-First</h4>
+            <p class="text-xs text-slate-500">Every I/O operation (database, storage, AI) is non-blocking. Built on Python's asyncio with FastAPI.</p>
+        </div>
+        <div class="text-center p-6 rounded-2xl bg-slate-50 border border-slate-200">
+            <i class="fa-solid fa-database text-blue-500 text-3xl mb-3"></i>
+            <h4 class="font-bold text-slate-900 mb-1">Connection Pooling</h4>
+            <p class="text-xs text-slate-500">MySQL connection pool (20-100 connections) ensures efficient database access under heavy load.</p>
+        </div>
+        <div class="text-center p-6 rounded-2xl bg-slate-50 border border-slate-200">
+            <i class="fa-solid fa-server text-emerald-500 text-3xl mb-3"></i>
+            <h4 class="font-bold text-slate-900 mb-1">Stateless</h4>
+            <p class="text-xs text-slate-500">No server-side sessions. JWT tokens enable horizontal scaling — add servers without session sync.</p>
+        </div>
+    </div>
+    <div class="pres-only grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl">
+        <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200">
+            <h4 class="font-bold text-slate-900 mb-2"><i class="fa-brands fa-aws text-amber-500 mr-2"></i>AWS Infrastructure</h4>
+            <p class="text-sm text-slate-500">S3 for storage, CloudFront CDN, Bedrock for AI, RDS for MySQL, auto-scaling EC2.</p>
+        </div>
+        <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200">
+            <h4 class="font-bold text-slate-900 mb-2"><i class="fa-solid fa-gears text-emerald-500 mr-2"></i>Background Processing</h4>
+            <p class="text-sm text-slate-500">AI grading, PDF generation, and slide creation run as background tasks — never blocking user requests.</p>
+        </div>
+    </div>
+    <div class="guide-only mt-8 overflow-x-auto">
+        <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
+            <thead class="bg-slate-50">
+                <tr><th class="p-3 text-left font-bold text-slate-700">Component</th><th class="p-3 text-left font-bold text-slate-700">Technology</th><th class="p-3 text-left font-bold text-slate-700">Purpose</th></tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+                <tr><td class="p-3">Web Framework</td><td class="p-3">FastAPI (Python 3.13)</td><td class="p-3">Async REST API with auto-documentation</td></tr>
+                <tr><td class="p-3">Database</td><td class="p-3">MySQL 8.0 + aiomysql</td><td class="p-3">Async connection pooling, 100 max connections</td></tr>
+                <tr><td class="p-3">File Storage</td><td class="p-3">Amazon S3</td><td class="p-3">Thumbnails, slides, logos, course materials</td></tr>
+                <tr><td class="p-3">AI Models</td><td class="p-3">AWS Bedrock (Claude, Llama 3, Stable Image)</td><td class="p-3">Content generation, grading, image creation</td></tr>
+                <tr><td class="p-3">PDF Generation</td><td class="p-3">WeasyPrint</td><td class="p-3">Certificates and course downloads</td></tr>
+                <tr><td class="p-3">CDN</td><td class="p-3">CloudFront</td><td class="p-3">Global static asset delivery</td></tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION: COMPARISON -->
+<!-- ============================================================ -->
+<section id="comparison" class="slide mb-16">
+    <h2 class="text-3xl font-black text-slate-900 mb-2">Platform Comparison</h2>
+    <p class="text-slate-500 mb-8">How this platform compares to industry-leading LMS solutions.</p>
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm border border-slate-200 rounded-xl overflow-hidden">
+            <thead class="bg-slate-900 text-white">
+                <tr>
+                    <th class="p-3 text-left font-bold">Feature</th>
+                    <th class="p-3 text-center font-bold bg-violet-800">This Platform</th>
+                    <th class="p-3 text-center font-bold">Moodle</th>
+                    <th class="p-3 text-center font-bold">Canvas</th>
+                    <th class="p-3 text-center font-bold">Blackboard</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+                <tr><td class="p-3 font-medium">AI Content Generation</td><td class="p-3 text-center comparison-yes rounded font-bold">✓ Full Suite</td><td class="p-3 text-center comparison-no rounded">✗ None</td><td class="p-3 text-center comparison-no rounded">✗ None</td><td class="p-3 text-center comparison-no rounded">✗ None</td></tr>
+                <tr><td class="p-3 font-medium">AI Exam Question Generation</td><td class="p-3 text-center comparison-yes rounded font-bold">✓ From Content</td><td class="p-3 text-center comparison-no rounded">✗ None</td><td class="p-3 text-center comparison-no rounded">✗ None</td><td class="p-3 text-center comparison-no rounded">✗ None</td></tr>
+                <tr><td class="p-3 font-medium">AI Essay/Code Grading</td><td class="p-3 text-center comparison-yes rounded font-bold">✓ With Rubric</td><td class="p-3 text-center comparison-no rounded">✗ None</td><td class="p-3 text-center comparison-no rounded">✗ None</td><td class="p-3 text-center comparison-no rounded">✗ None</td></tr>
+                <tr><td class="p-3 font-medium">AI Slide Deck Generation</td><td class="p-3 text-center comparison-yes rounded font-bold">✓ Visual PDF</td><td class="p-3 text-center comparison-no rounded">✗ None</td><td class="p-3 text-center comparison-no rounded">✗ None</td><td class="p-3 text-center comparison-no rounded">✗ None</td></tr>
+                <tr><td class="p-3 font-medium">Mixed Assessments (MCQ+Essay+Code)</td><td class="p-3 text-center comparison-yes rounded font-bold">✓ Single Exam</td><td class="p-3 text-center comparison-partial rounded">Separate</td><td class="p-3 text-center comparison-partial rounded">Separate</td><td class="p-3 text-center comparison-partial rounded">Separate</td></tr>
+                <tr><td class="p-3 font-medium">Multi-Institution Isolation</td><td class="p-3 text-center comparison-yes rounded font-bold">✓ Built-in</td><td class="p-3 text-center comparison-partial rounded">Plugin</td><td class="p-3 text-center comparison-partial rounded">Paid Add-on</td><td class="p-3 text-center comparison-partial rounded">Enterprise</td></tr>
+                <tr><td class="p-3 font-medium">Certificate with QR Verification</td><td class="p-3 text-center comparison-yes rounded font-bold">✓ Auto-Generated</td><td class="p-3 text-center comparison-partial rounded">Plugin</td><td class="p-3 text-center comparison-partial rounded">Plugin</td><td class="p-3 text-center comparison-partial rounded">Plugin</td></tr>
+                <tr><td class="p-3 font-medium">At-Risk Student Detection</td><td class="p-3 text-center comparison-yes rounded font-bold">✓ Automatic</td><td class="p-3 text-center comparison-partial rounded">Plugin</td><td class="p-3 text-center comparison-partial rounded">Analytics</td><td class="p-3 text-center comparison-partial rounded">Retention</td></tr>
+                <tr><td class="p-3 font-medium">Prompt Injection Protection</td><td class="p-3 text-center comparison-yes rounded font-bold">✓ Built-in</td><td class="p-3 text-center comparison-no rounded">N/A</td><td class="p-3 text-center comparison-no rounded">N/A</td><td class="p-3 text-center comparison-no rounded">N/A</td></tr>
+                <tr><td class="p-3 font-medium">Modern Async Architecture</td><td class="p-3 text-center comparison-yes rounded font-bold">✓ FastAPI</td><td class="p-3 text-center comparison-no rounded">PHP (sync)</td><td class="p-3 text-center comparison-partial rounded">Ruby</td><td class="p-3 text-center comparison-no rounded">Java (legacy)</td></tr>
+                <tr><td class="p-3 font-medium">Open Source</td><td class="p-3 text-center comparison-yes rounded font-bold">✓ Free</td><td class="p-3 text-center comparison-yes rounded">✓ Free</td><td class="p-3 text-center comparison-partial rounded">Partial</td><td class="p-3 text-center comparison-no rounded">✗ Proprietary</td></tr>
+                <tr><td class="p-3 font-medium">Setup Complexity</td><td class="p-3 text-center comparison-yes rounded font-bold">Low</td><td class="p-3 text-center comparison-no rounded">High</td><td class="p-3 text-center comparison-partial rounded">Medium</td><td class="p-3 text-center comparison-no rounded">High</td></tr>
+                <tr><td class="p-3 font-medium">License Cost</td><td class="p-3 text-center comparison-yes rounded font-bold">Free</td><td class="p-3 text-center comparison-yes rounded">Free</td><td class="p-3 text-center comparison-no rounded">$$$$</td><td class="p-3 text-center comparison-no rounded">$$$$</td></tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION: FAQ -->
+<!-- ============================================================ -->
+<section id="faq" class="slide mb-16 guide-only">
+    <h2 class="text-3xl font-black text-slate-900 mb-6">Frequently Asked Questions</h2>
+    <div class="space-y-4">
+        <details class="p-5 rounded-2xl border border-slate-200 bg-white group">
+            <summary class="font-bold text-slate-900 cursor-pointer flex items-center justify-between"><span>How do I reset my password?</span><i class="fa-solid fa-chevron-down text-slate-400 group-open:rotate-180 transition-transform"></i></summary>
+            <p class="text-sm text-slate-500 mt-3">Contact your institution's administrator or staff member. They can reset your password from the Accounts management panel. For security, passwords cannot be recovered — only reset.</p>
+        </details>
+        <details class="p-5 rounded-2xl border border-slate-200 bg-white group">
+            <summary class="font-bold text-slate-900 cursor-pointer flex items-center justify-between"><span>Can I retake an assessment?</span><i class="fa-solid fa-chevron-down text-slate-400 group-open:rotate-180 transition-transform"></i></summary>
+            <p class="text-sm text-slate-500 mt-3">Yes, if the instructor configured multiple attempts. The number of remaining attempts is shown on the assessment card. Each attempt pulls random questions from the item bank, so the exam is different each time.</p>
+        </details>
+        <details class="p-5 rounded-2xl border border-slate-200 bg-white group">
+            <summary class="font-bold text-slate-900 cursor-pointer flex items-center justify-between"><span>How is my essay/code graded?</span><i class="fa-solid fa-chevron-down text-slate-400 group-open:rotate-180 transition-transform"></i></summary>
+            <p class="text-sm text-slate-500 mt-3">The platform evaluates your response against a structured rubric with specific criteria (e.g., correctness, completeness, code quality). Each criterion receives a score. Your teacher can also review and adjust the score if needed.</p>
+        </details>
+        <details class="p-5 rounded-2xl border border-slate-200 bg-white group">
+            <summary class="font-bold text-slate-900 cursor-pointer flex items-center justify-between"><span>What happens if I run out of time during an exam?</span><i class="fa-solid fa-chevron-down text-slate-400 group-open:rotate-180 transition-transform"></i></summary>
+            <p class="text-sm text-slate-500 mt-3">The exam is automatically submitted with whatever answers you've provided. Unanswered questions receive zero points. You'll see a warning when one minute remains.</p>
+        </details>
+        <details class="p-5 rounded-2xl border border-slate-200 bg-white group">
+            <summary class="font-bold text-slate-900 cursor-pointer flex items-center justify-between"><span>How do I get my certificate?</span><i class="fa-solid fa-chevron-down text-slate-400 group-open:rotate-180 transition-transform"></i></summary>
+            <p class="text-sm text-slate-500 mt-3">Complete all modules (mark each as done) and pass all assessments. Once both conditions are met, the system automatically marks your enrollment as "completed" and a download button appears on your course card.</p>
+        </details>
+        <details class="p-5 rounded-2xl border border-slate-200 bg-white group">
+            <summary class="font-bold text-slate-900 cursor-pointer flex items-center justify-between"><span>Can someone verify my certificate is real?</span><i class="fa-solid fa-chevron-down text-slate-400 group-open:rotate-180 transition-transform"></i></summary>
+            <p class="text-sm text-slate-500 mt-3">Yes! Each certificate has a QR code. When scanned, it opens a public verification page that shows the student name, course, and completion date — no login required. This makes it easy to share with employers.</p>
+        </details>
+        <details class="p-5 rounded-2xl border border-slate-200 bg-white group">
+            <summary class="font-bold text-slate-900 cursor-pointer flex items-center justify-between"><span>What browsers are supported?</span><i class="fa-solid fa-chevron-down text-slate-400 group-open:rotate-180 transition-transform"></i></summary>
+            <p class="text-sm text-slate-500 mt-3">The platform works on all modern browsers: Google Chrome, Mozilla Firefox, Apple Safari, and Microsoft Edge. A stable internet connection is required. The interface is responsive and works on mobile devices.</p>
+        </details>
+    </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- FOOTER -->
+<!-- ============================================================ -->
+<footer class="mt-20 pt-10 border-t border-slate-200 pb-10 text-center">
+    <p class="text-sm text-slate-400">LMS Platform — User Guide & Capabilities Overview</p>
+    <p class="text-xs text-slate-300 mt-1">Built with modern technologies for next-generation learning experiences.</p>
+</footer>
+
+</main>
+
+<!-- Presentation Navigation (fixed bottom bar, only in pres mode) -->
+<div id="presNav" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 bg-white/90 backdrop-blur border border-slate-200 rounded-2xl px-5 py-3 shadow-xl">
+    <button onclick="presGoTo('prev')" class="h-10 w-10 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-all active:scale-90">
+        <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <span class="text-xs font-bold text-slate-500 min-w-[80px] text-center" id="presSlideCounter">1 / 1</span>
+    <button onclick="presGoTo('next')" class="h-10 w-10 rounded-xl bg-violet-600 hover:bg-violet-700 text-white flex items-center justify-center transition-all active:scale-90">
+        <i class="fa-solid fa-chevron-right"></i>
+    </button>
+</div>
+
+<!-- ============================================================ -->
+<!-- JAVASCRIPT -->
+<!-- ============================================================ -->
+<script>
+let presCurrentSlide = 0;
+let presSlides = [];
+let presScrollLocked = false;
+
+function setMode(mode) {
+    const body = document.getElementById('appBody');
+    const btnGuide = document.getElementById('btnGuide');
+    const btnPres = document.getElementById('btnPres');
+    if (mode === 'pres') {
+        body.classList.remove('guide-mode');
+        body.classList.add('pres-mode');
+        btnPres.className = 'px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-violet-600 text-white';
+        btnGuide.className = 'px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-slate-100 text-slate-600 hover:bg-slate-200';
+        document.getElementById('guideContent').style.marginLeft = '0';
+        // Init presentation slides (only those not hidden by guide-only)
+        setTimeout(() => {
+            presSlides = Array.from(document.querySelectorAll('.slide')).filter(s => !s.classList.contains('guide-only'));
+            presCurrentSlide = 0;
+            presShowSlide(0);
+            updatePresCounter();
+        }, 100);
+    } else {
+        body.classList.remove('pres-mode');
+        body.classList.add('guide-mode');
+        btnGuide.className = 'px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-violet-600 text-white';
+        btnPres.className = 'px-3 py-1.5 rounded-xl text-xs font-bold transition-all bg-slate-100 text-slate-600 hover:bg-slate-200';
+        document.getElementById('guideContent').style.marginLeft = '';
+        // Reset slide visibility
+        document.querySelectorAll('.slide').forEach(s => {
+            s.classList.remove('slide-visible');
+            s.style.opacity = '';
+            s.style.transform = '';
+        });
+    }
+    window.scrollTo({ top: 0 });
+}
+
+function presShowSlide(index) {
+    if (index < 0 || index >= presSlides.length) return;
+    presCurrentSlide = index;
+    // Hide all slides first
+    presSlides.forEach(s => s.classList.remove('slide-visible'));
+    // Show target slide with animation
+    const target = presSlides[index];
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(() => target.classList.add('slide-visible'), 50);
+    updatePresCounter();
+}
+
+function presGoTo(dir) {
+    if (dir === 'next' && presCurrentSlide < presSlides.length - 1) {
+        presShowSlide(presCurrentSlide + 1);
+    } else if (dir === 'prev' && presCurrentSlide > 0) {
+        presShowSlide(presCurrentSlide - 1);
+    }
+}
+
+function updatePresCounter() {
+    const counter = document.getElementById('presSlideCounter');
+    if (counter && presSlides.length) {
+        counter.innerText = `${presCurrentSlide + 1} / ${presSlides.length}`;
+    }
+}
+
+// Keyboard navigation for presentation mode
+document.addEventListener('keydown', (e) => {
+    if (!document.getElementById('appBody').classList.contains('pres-mode')) return;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+        e.preventDefault();
+        presGoTo('next');
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        presGoTo('prev');
+    }
+});
+
+// Scroll-based slide navigation in presentation mode (debounced)
+let lastScrollTime = 0;
+document.addEventListener('wheel', (e) => {
+    if (!document.getElementById('appBody').classList.contains('pres-mode')) return;
+    if (presScrollLocked) return;
+    const now = Date.now();
+    if (now - lastScrollTime < 800) return; // debounce 800ms
+    lastScrollTime = now;
+    presScrollLocked = true;
+    if (e.deltaY > 0) {
+        presGoTo('next');
+    } else if (e.deltaY < 0) {
+        presGoTo('prev');
+    }
+    setTimeout(() => { presScrollLocked = false; }, 800);
+}, { passive: false });
+
+// Active nav highlighting on scroll (guide mode only)
+const observer = new IntersectionObserver((entries) => {
+    if (document.getElementById('appBody').classList.contains('pres-mode')) return;
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            const link = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+            if (link) link.classList.add('active');
+        }
+    });
+}, { threshold: 0.3 });
+document.querySelectorAll('section[id]').forEach(sec => observer.observe(sec));
+</script>
+</body>
+</html>
