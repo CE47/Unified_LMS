@@ -1301,6 +1301,113 @@ code { font-family: 'Courier New', monospace; font-size: 0.8em; background: #f1f
             <div class="step-num flex items-start"><div><strong class="text-slate-800">Build your integration</strong> — use the endpoints to sync students, enrollments, grades, and certificates between your SIS and the LMS.</div></div>
         </div>
     </div>
+
+    <!-- What the Developer Portal looks like -->
+    <h3 class="text-lg font-bold text-slate-900 mb-3">What the Developer Portal Looks Like</h3>
+    <p class="text-sm text-slate-600 mb-4">The <code>/developer</code> page is a self-serve API reference with a live <strong>"Try It"</strong> console. Paste your API key once in the sidebar, then send real requests to any endpoint and see the JSON response — right in your browser.</p>
+
+    <!-- UI Mock: Developer Portal page (accurate to platform) -->
+    <div class="ui-mock mb-6">
+        <div class="ui-mock-header"><div class="ui-mock-dot bg-red-400"></div><div class="ui-mock-dot bg-yellow-400"></div><div class="ui-mock-dot bg-green-400"></div><span class="text-[10px] text-slate-400 ml-2">Developer Portal — /developer</span></div>
+        <div class="ui-mock-body bg-white p-0">
+            <!-- Top bar -->
+            <div class="flex items-center justify-between px-4 py-2 border-b border-slate-100 bg-white">
+                <div class="flex items-center gap-2">
+                    <div class="h-5 w-5 rounded-md bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center"><i class="fa-solid fa-code text-white text-[8px]"></i></div>
+                    <span class="text-[10px] font-bold text-slate-900">Unified LMS</span>
+                    <span class="text-[8px] text-slate-400">Developer Portal</span>
+                </div>
+                <span class="text-[8px] font-semibold text-slate-400"><i class="fa-solid fa-arrow-left mr-0.5"></i> Back to LMS</span>
+            </div>
+            <div class="flex">
+                <!-- Sidebar -->
+                <div class="w-[34%] shrink-0 border-r border-slate-100 p-3">
+                    <p class="text-[7px] font-bold uppercase tracking-widest text-slate-400 mb-1">Your API Key</p>
+                    <div class="bg-slate-50 rounded-md h-5 border border-slate-200 flex items-center px-2 text-[8px] text-slate-400 mono mb-3">tldsk_•••••••••••</div>
+                    <p class="text-[7px] font-bold uppercase tracking-widest text-slate-400 mb-1">Getting Started</p>
+                    <div class="space-y-0.5 mb-2 text-[8px]">
+                        <div class="px-2 py-1 rounded-r bg-blue-50 border-l-2 border-blue-600 text-blue-700 font-semibold">Overview</div>
+                        <div class="px-2 py-1 text-slate-500">Authentication</div>
+                        <div class="px-2 py-1 text-slate-500">Error Handling</div>
+                        <div class="px-2 py-1 text-slate-500">Pagination</div>
+                        <div class="px-2 py-1 text-slate-500">Rate Limits</div>
+                    </div>
+                    <p class="text-[7px] font-bold uppercase tracking-widest text-slate-400 mb-1">Endpoints</p>
+                    <div class="space-y-0.5 text-[8px] text-slate-500">
+                        <div class="px-2 py-1">Test / Ping</div>
+                        <div class="px-2 py-1">Accounts</div>
+                        <div class="px-2 py-1">Enrollments</div>
+                        <div class="px-2 py-1">Grades</div>
+                        <div class="px-2 py-1">Courses · Instances</div>
+                        <div class="px-2 py-1">Certificates · Subscription</div>
+                    </div>
+                </div>
+                <!-- Content: endpoint cards -->
+                <div class="flex-1 p-3 bg-slate-50/60">
+                    <p class="text-[11px] font-black text-slate-900 mb-0.5">External API Reference</p>
+                    <p class="text-[8px] text-slate-400 mb-3">Base URL <code class="text-[8px]">/api/v1/external/</code> · Auth <code class="text-[8px]">X-API-Key</code> · JSON</p>
+                    <!-- endpoint card 1 -->
+                    <div class="bg-white border border-slate-200 rounded-lg p-2.5 mb-2">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-[7px] font-bold px-1.5 py-0.5 rounded uppercase" style="background:#dcfce7;color:#166534;">GET</span>
+                            <code class="text-[8px] text-slate-700">/api/v1/external/accounts</code>
+                        </div>
+                        <p class="text-[8px] text-slate-500 mb-0.5">List all student accounts for your institution. Paginated.</p>
+                        <p class="text-[7px] text-violet-600 font-semibold mb-1.5">Scope: accounts:read</p>
+                        <span class="text-[8px] font-bold text-blue-600"><i class="fa-solid fa-play text-[6px] mr-0.5"></i> Try It</span>
+                    </div>
+                    <!-- endpoint card 2 -->
+                    <div class="bg-white border border-slate-200 rounded-lg p-2.5">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-[7px] font-bold px-1.5 py-0.5 rounded uppercase" style="background:#dbeafe;color:#1e40af;">POST</span>
+                            <code class="text-[8px] text-slate-700">/api/v1/external/enrollments</code>
+                        </div>
+                        <p class="text-[8px] text-slate-500 mb-0.5">Enroll a student into a course instance.</p>
+                        <p class="text-[7px] text-violet-600 font-semibold mb-1.5">Scope: enrollments:write</p>
+                        <span class="text-[8px] font-bold text-blue-600"><i class="fa-solid fa-play text-[6px] mr-0.5"></i> Try It</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p class="text-[11px] text-slate-400 italic mb-6">Each endpoint shows its HTTP method (colour-coded), path, description, and required scope. Clicking <strong>"Try It"</strong> opens a console where you fill in any path parameters or JSON body and send a live request.</p>
+
+    <!-- UI Mock: Try It console -->
+    <p class="text-sm text-slate-600 mb-3">Clicking <strong>"Try It"</strong> on any endpoint opens the request console:</p>
+    <div class="ui-mock mb-6">
+        <div class="ui-mock-header"><div class="ui-mock-dot bg-red-400"></div><div class="ui-mock-dot bg-yellow-400"></div><div class="ui-mock-dot bg-green-400"></div><span class="text-[10px] text-slate-400 ml-2">Try It — Send Request</span></div>
+        <div class="ui-mock-body bg-white p-0">
+            <div class="flex items-center gap-2 px-3 py-2 border-b border-slate-100">
+                <span class="text-[8px] font-bold px-1.5 py-0.5 rounded uppercase" style="background:#dbeafe;color:#1e40af;">POST</span>
+                <code class="text-[9px] text-slate-700">/api/v1/external/accounts</code>
+            </div>
+            <div class="p-3 space-y-2.5">
+                <div>
+                    <p class="text-[7px] font-bold uppercase tracking-widest text-slate-400 mb-1">Request Body (JSON)</p>
+                    <div class="bg-slate-900 rounded-lg p-2.5"><pre class="text-emerald-400 text-[8px] leading-relaxed mono">{
+  "email": "student@example.com",
+  "full_name": "Juan Dela Cruz",
+  "uli": "ULI-2026-0001234"
+}</pre></div>
+                </div>
+                <div class="w-full py-1.5 bg-blue-600 text-white rounded-lg text-center text-[8px] font-bold"><i class="fa-solid fa-paper-plane text-[7px] mr-1"></i>Send Request</div>
+                <div>
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="text-[7px] font-bold px-1.5 py-0.5 rounded" style="background:#dcfce7;color:#166534;">201 Created</span>
+                        <span class="text-[7px] text-slate-400">142 ms</span>
+                    </div>
+                    <div class="bg-slate-900 rounded-lg p-2.5"><pre class="text-slate-300 text-[8px] leading-relaxed mono">{
+  "account": { "id": 45, "email": "student@example.com",
+    "full_name": "Juan Dela Cruz", "role": "user" },
+  "quota": { "used_students": 235, "max_students": 500 }
+}</pre></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bg-violet-50 border border-violet-200 rounded-xl p-4 mb-2">
+        <p class="text-xs text-violet-800"><i class="fa-solid fa-circle-info text-violet-600 mr-1.5"></i>The portal is <strong>informational + interactive</strong> and needs no login — only a valid API key to run "Try It" requests. All calls are institution-scoped and consume the same subscription quota as the web dashboard. Response bodies shown are illustrative.</p>
+    </div>
 </section>
 
 <!-- Developer: API Integration -->
@@ -1356,7 +1463,7 @@ code { font-family: 'Courier New', monospace; font-size: 0.8em; background: #f1f
         </div>
         <div class="border border-slate-200 rounded-xl p-4 text-xs">
             <p class="font-bold text-slate-800 mb-2">Scopes</p>
-            <p class="text-slate-600">Keys have specific permissions (e.g., <code>accounts:read</code>, <code>enrollments:write</code>). The staff who generates the key selects which scopes to grant.</p>
+            <p class="text-slate-600">Keys have specific permissions (e.g., <code>accounts:read</code>, <code>enrollments:write</code>). The staff who generates the key selects which scopes to grant — individually, or via a preset bundle: <strong>read_only</strong> (all read scopes), <strong>enrollment_manager</strong> (accounts + enrollments read/write, plus courses/instances read), or <strong>full_access</strong> (all scopes).</p>
         </div>
         <div class="border border-slate-200 rounded-xl p-4 text-xs">
             <p class="font-bold text-slate-800 mb-2">Quota Enforcement</p>
@@ -1388,6 +1495,7 @@ code { font-family: 'Courier New', monospace; font-size: 0.8em; background: #f1f
                 <tr><th class="text-left px-4 py-2.5">Category</th><th class="text-left px-4 py-2.5">Endpoints</th><th class="text-left px-4 py-2.5">Scope Required</th><th class="text-left px-4 py-2.5">Key Operations</th></tr>
             </thead>
             <tbody class="divide-y divide-slate-100">
+                <tr><td class="px-4 py-2.5 font-bold text-slate-700">Test / Ping</td><td class="px-4 py-2.5">2</td><td class="px-4 py-2.5"><code>none / accounts:read</code></td><td class="px-4 py-2.5 text-slate-500">Verify key validity and scope access</td></tr>
                 <tr><td class="px-4 py-2.5 font-bold text-slate-700">Accounts</td><td class="px-4 py-2.5">8</td><td class="px-4 py-2.5"><code>accounts:read/write</code></td><td class="px-4 py-2.5 text-slate-500">Create, list, lookup by email/ULI, update</td></tr>
                 <tr><td class="px-4 py-2.5 font-bold text-slate-700">Enrollments</td><td class="px-4 py-2.5">8</td><td class="px-4 py-2.5"><code>enrollments:read/write</code></td><td class="px-4 py-2.5 text-slate-500">Enroll, bulk enroll, progress, assessments</td></tr>
                 <tr><td class="px-4 py-2.5 font-bold text-slate-700">Grades</td><td class="px-4 py-2.5">5</td><td class="px-4 py-2.5"><code>grades:read</code></td><td class="px-4 py-2.5 text-slate-500">Per-enrollment, per-student, class list, summary</td></tr>
