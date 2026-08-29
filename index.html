@@ -58,6 +58,10 @@ code { font-family: 'Courier New', monospace; font-size: 0.8em; background: #f1f
         <a href="#staff-teachers" class="nav-link block px-3 py-2 rounded-r-lg text-xs text-slate-300">Teacher Assignments</a>
         <a href="#staff-apikeys" class="nav-link block px-3 py-2 rounded-r-lg text-xs text-slate-300">API Key Management</a>
 
+        <p class="px-3 pt-5 pb-1 text-[9px] font-black uppercase tracking-widest text-slate-500">Competency Tools</p>
+        <a href="#cs-generator" class="nav-link block px-3 py-2 rounded-r-lg text-xs text-slate-300">CS Generator</a>
+        <a href="#cbc-generator" class="nav-link block px-3 py-2 rounded-r-lg text-xs text-slate-300">CBC Generator</a>
+
         <p class="px-3 pt-5 pb-1 text-[9px] font-black uppercase tracking-widest text-slate-500">Teacher</p>
         <a href="#teacher-dashboard" class="nav-link block px-3 py-2 rounded-r-lg text-xs text-slate-300">Teacher Dashboard</a>
         <a href="#teacher-tracker" class="nav-link block px-3 py-2 rounded-r-lg text-xs text-slate-300">Student Tracker</a>
@@ -190,7 +194,7 @@ code { font-family: 'Courier New', monospace; font-size: 0.8em; background: #f1f
             <i class="fa-solid fa-circle-info text-blue-600 mt-0.5"></i>
             <div>
                 <p class="text-sm font-bold text-blue-900 mb-1">Your Institution URL</p>
-                <p class="text-xs text-blue-700 leading-relaxed">Each institution gets a branded landing page at <code>/YOUR-INSTITUTION-CODE</code>. The page shows your logo, contact info, available courses, and a login form with <strong>Student</strong> and <strong>Staff/Admin</strong> tabs. Both tabs accept any account type — the distinction is purely visual.</p>
+                <p class="text-xs text-blue-700 leading-relaxed">Each institution gets a branded landing page at <code>/YOUR-INSTITUTION-CODE</code>. The page shows your logo, contact info, available courses, and a login form with <strong>Student</strong> and <strong>Staff/Admin</strong> tabs. </p>
             </div>
         </div>
     </div>
@@ -529,6 +533,614 @@ code { font-family: 'Courier New', monospace; font-size: 0.8em; background: #f1f
 
     <div class="mt-4 bg-rose-50 border border-rose-200 rounded-xl p-4">
         <p class="text-xs text-rose-800"><i class="fa-solid fa-shield-halved text-rose-600 mr-1.5"></i><strong>Security:</strong> API keys are hashed (bcrypt) in the database — nobody (including system admins) can see the full key after generation. If compromised, revoke it immediately and generate a new one.</p>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- COMPETENCY STANDARDS (CS) GENERATOR -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section id="cs-generator" class="mb-20">
+    <div class="flex items-center gap-3 mb-2">
+        <div class="h-9 w-9 rounded-xl bg-violet-100 text-violet-600 flex items-center justify-center"><i class="fa-solid fa-file-lines"></i></div>
+        <h2 class="text-2xl font-black text-slate-900">CS Generator</h2>
+    </div>
+    <p class="text-sm text-slate-500 mb-8 max-w-2xl">The <strong>Competency Standards (CS) Generator</strong> lets you build a complete, TESDA-formatted Competency Standards document — qualifications, their competency units, and full training requirements — and export it as a polished Word (<code>.docx</code>) file. AI assists every step, but you stay in control: nothing is final until you review and save.</p>
+
+    <div class="bg-violet-50 border border-violet-200 rounded-2xl p-5 mb-8">
+        <div class="flex items-start gap-3">
+            <i class="fa-solid fa-circle-info text-violet-600 mt-0.5"></i>
+            <div>
+                <p class="text-sm font-bold text-violet-900 mb-1">Where to find it &amp; what you'll see</p>
+                <p class="text-xs text-violet-700 leading-relaxed">Open it from the sidebar menu item <strong>"CS Generator"</strong>. You manage your <em>own institution's</em> qualifications here. The shared TESDA-standard building blocks (Basic competencies and global Common competencies) appear as <strong>read-only</strong> — they're maintained centrally so every institution uses the same national standard, while anything your institution creates is fully editable.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- The big picture -->
+    <h3 class="text-lg font-bold text-slate-900 mb-3">The Big Picture — How a CS Document Is Built</h3>
+    <p class="text-sm text-slate-600 mb-4">A Competency Standard is made of layers. Understanding them makes everything else obvious:</p>
+    <div class="grid sm:grid-cols-2 gap-3 mb-8 text-xs">
+        <div class="flex items-start gap-2 p-3 bg-slate-50 rounded-xl"><i class="fa-solid fa-award text-violet-500 mt-0.5"></i><div><strong class="text-slate-700">Qualification</strong><p class="text-slate-500 mt-0.5">The program itself (e.g., "Automotive Servicing NC I"). Has a title, sector, PQF level, description, and job titles.</p></div></div>
+        <div class="flex items-start gap-2 p-3 bg-slate-50 rounded-xl"><i class="fa-solid fa-cubes text-blue-500 mt-0.5"></i><div><strong class="text-slate-700">Units of Competency</strong><p class="text-slate-500 mt-0.5">Grouped into <strong>Basic</strong>, <strong>Common</strong>, and <strong>Core</strong>. Each unit is a distinct skill area.</p></div></div>
+        <div class="flex items-start gap-2 p-3 bg-slate-50 rounded-xl"><i class="fa-solid fa-list-check text-emerald-500 mt-0.5"></i><div><strong class="text-slate-700">Elements &amp; Criteria</strong><p class="text-slate-500 mt-0.5">Inside each unit: Elements (sub-skills), each with Performance Criteria, Required Knowledge, and Required Skills.</p></div></div>
+        <div class="flex items-start gap-2 p-3 bg-slate-50 rounded-xl"><i class="fa-solid fa-sliders text-amber-500 mt-0.5"></i><div><strong class="text-slate-700">Range of Variables &amp; Evidence Guide</strong><p class="text-slate-500 mt-0.5">Per unit: the conditions/tools it applies to, and how competence is assessed.</p></div></div>
+        <div class="flex items-start gap-2 p-3 bg-slate-50 rounded-xl"><i class="fa-solid fa-clipboard-list text-rose-500 mt-0.5"></i><div><strong class="text-slate-700">Section 3 — Training Requirements</strong><p class="text-slate-500 mt-0.5">Trainee entry requirements, trainer qualifications, tools/equipment/materials, and training facilities.</p></div></div>
+        <div class="flex items-start gap-2 p-3 bg-slate-50 rounded-xl"><i class="fa-solid fa-handshake-angle text-teal-500 mt-0.5"></i><div><strong class="text-slate-700">Acknowledgements</strong><p class="text-slate-500 mt-0.5">The people and organizations credited in the final document.</p></div></div>
+    </div>
+
+    <!-- UI Mock: CS list view -->
+    <div class="ui-mock mb-8">
+        <div class="ui-mock-header"><div class="ui-mock-dot bg-red-400"></div><div class="ui-mock-dot bg-yellow-400"></div><div class="ui-mock-dot bg-green-400"></div><span class="text-[10px] text-slate-400 ml-2">CS Generator — Qualifications List</span></div>
+        <div class="ui-mock-body">
+            <div class="flex items-center justify-between mb-3">
+                <p class="text-xs font-bold text-slate-700">Competency Standards Generator</p>
+                <div class="flex gap-2">
+                    <div class="bg-white border border-slate-200 rounded-lg px-3 py-1.5 text-[9px] font-bold text-slate-600"><i class="fa-solid fa-layer-group mr-1"></i>Common Competencies</div>
+                    <div class="bg-blue-600 text-white rounded-lg px-3 py-1.5 text-[9px] font-bold"><i class="fa-solid fa-plus mr-1"></i>New Qualification</div>
+                </div>
+            </div>
+            <div class="border border-slate-200 rounded-lg overflow-hidden text-[10px]">
+                <div class="grid grid-cols-12 gap-2 px-3 py-2 bg-slate-50 font-bold text-slate-500 uppercase text-[9px]">
+                    <span class="col-span-4">Qualification Title</span><span class="col-span-3">Sector</span><span class="col-span-3">PQF Level</span><span class="col-span-2 text-right">Actions</span>
+                </div>
+                <div class="grid grid-cols-12 gap-2 px-3 py-2 border-t border-slate-100 text-slate-600 items-center">
+                    <span class="col-span-4 font-bold text-slate-800"><i class="fa-solid fa-file-lines text-slate-300 mr-1.5"></i>Automotive Servicing NC I</span>
+                    <span class="col-span-3">Automotive</span><span class="col-span-3">NC I</span>
+                    <span class="col-span-2 text-right text-blue-500"><i class="fa-solid fa-pen mr-2"></i><i class="fa-solid fa-trash-can text-rose-400"></i></span>
+                </div>
+            </div>
+            <p class="text-[9px] text-slate-400 mt-2 italic">Click any row to open the qualification. Use the top buttons to manage the shared competency libraries.</p>
+        </div>
+    </div>
+
+    <!-- The AI Generate button explainer -->
+    <div class="bg-gradient-to-r from-violet-50 to-fuchsia-50 border border-violet-200 rounded-2xl p-5 mb-8">
+        <p class="text-sm font-bold text-slate-900 mb-2 flex items-center gap-2"><span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-purple-100 text-purple-700 text-[10px] font-bold"><i class="fa-solid fa-wand-magic-sparkles"></i> AI Generate</span> The purple wand is everywhere</p>
+        <p class="text-xs text-slate-600 leading-relaxed">Almost every field has a small <strong>purple "AI Generate"</strong> button (a magic-wand icon). Clicking it asks the AI to draft that field using everything already filled in — the qualification title, sector, PQF level, description, and the competency content you've built. The draft appears in the field for you to <strong>review and edit</strong>; it is not saved until you click Save. AI drafts get better as you fill in more context, so work top-down.</p>
+    </div>
+
+    <!-- Component: Qualifications -->
+    <h3 class="text-lg font-bold text-slate-900 mb-3"><i class="fa-solid fa-award text-violet-500 mr-2"></i>Creating a Qualification</h3>
+    <p class="text-sm text-slate-600 mb-4">Click <strong>"New Qualification"</strong>. A large modal opens with four tabs: <strong>Qualification Details</strong>, <strong>Core Competencies</strong>, <strong>Training Requirements</strong>, and <strong>Acknowledgements</strong>.</p>
+
+    <!-- UI Mock: New Qualification modal — Details tab (accurate to platform) -->
+    <div class="ui-mock mb-6">
+        <div class="ui-mock-header"><div class="ui-mock-dot bg-red-400"></div><div class="ui-mock-dot bg-yellow-400"></div><div class="ui-mock-dot bg-green-400"></div><span class="text-[10px] text-slate-400 ml-2">New Qualification</span></div>
+        <div class="ui-mock-body bg-white">
+            <!-- Modal header + tab pills -->
+            <div class="pb-3 border-b border-slate-100 mb-3">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-black text-slate-900">New Qualification</p>
+                        <p class="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Competency Standard Details</p>
+                    </div>
+                    <i class="fa-solid fa-xmark text-slate-400"></i>
+                </div>
+                <div class="flex gap-1 p-1 bg-slate-100 rounded-xl mt-2 max-w-lg">
+                    <span class="flex-1 py-1.5 rounded-lg bg-white text-slate-900 shadow-sm text-[9px] font-bold text-center"><i class="fa-solid fa-file-lines mr-1"></i>Qualification Details</span>
+                    <span class="flex-1 py-1.5 rounded-lg text-slate-500 text-[9px] font-bold text-center"><i class="fa-solid fa-cubes mr-1"></i>Core Competencies <span class="ml-0.5 inline-flex items-center justify-center h-3.5 min-w-[14px] px-1 text-[7px] font-black bg-emerald-100 text-emerald-700 rounded-full">0</span></span>
+                    <span class="flex-1 py-1.5 rounded-lg text-slate-500 text-[9px] font-bold text-center"><i class="fa-solid fa-chalkboard-user mr-1"></i>Training Requirements</span>
+                    <span class="flex-1 py-1.5 rounded-lg text-slate-500 text-[9px] font-bold text-center"><i class="fa-solid fa-handshake mr-1"></i>Acknowledgements</span>
+                </div>
+            </div>
+            <!-- Details tab: two columns -->
+            <div class="grid md:grid-cols-2 gap-4">
+                <!-- Left: Qualification Information -->
+                <div class="space-y-2.5">
+                    <div class="flex items-center gap-1.5"><div class="h-4 w-1 bg-violet-600 rounded-full"></div><span class="text-[9px] font-black text-slate-500 uppercase tracking-widest">Qualification Information</span></div>
+                    <div><p class="text-[8px] font-black text-slate-500 uppercase tracking-widest mb-0.5">Qualification Title <span class="text-rose-400">*</span></p><div class="bg-slate-50 rounded-lg h-6 border border-slate-200 flex items-center px-2 text-[9px] text-slate-400">e.g., Computer Systems Servicing NC II</div></div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div><p class="text-[8px] font-black text-slate-500 uppercase tracking-widest mb-0.5">Sector <span class="text-rose-400">*</span></p><div class="bg-slate-50 rounded-lg h-6 border border-slate-200 flex items-center justify-between px-2 text-[9px] text-slate-400">Select Sector <i class="fa-solid fa-chevron-down text-[7px]"></i></div></div>
+                        <div><p class="text-[8px] font-black text-slate-500 uppercase tracking-widest mb-0.5">PQF Level <span class="text-rose-400">*</span></p><div class="bg-slate-50 rounded-lg h-6 border border-slate-200 flex items-center justify-between px-2 text-[9px] text-slate-400">Select PQF <i class="fa-solid fa-chevron-down text-[7px]"></i></div></div>
+                    </div>
+                    <p class="text-[8px] text-slate-400">9 Basic competency units will be auto-assigned based on NC level</p>
+                    <div><p class="text-[8px] font-black text-slate-500 uppercase tracking-widest mb-0.5">Nominal Duration — Auto-computed</p><div class="bg-slate-100 rounded-lg px-2 py-1.5 border border-slate-200 text-[9px]"><span class="text-blue-600 font-bold">162h</span> <span class="text-slate-400">( Basic 18h + Common 24h + Core 120h )</span></div></div>
+                    <div><p class="text-[8px] font-black text-slate-500 uppercase tracking-widest mb-0.5">Description</p><div class="bg-slate-50 rounded-lg h-10 border border-slate-200"></div></div>
+                </div>
+                <!-- Right: Job Roles & Outcomes + Summary -->
+                <div class="space-y-2.5">
+                    <div class="flex items-center gap-1.5"><div class="h-4 w-1 bg-violet-600 rounded-full"></div><span class="text-[9px] font-black text-slate-500 uppercase tracking-widest">Job Roles &amp; Outcomes</span></div>
+                    <div>
+                        <p class="text-[8px] font-black text-slate-500 uppercase tracking-widest mb-0.5">Job Titles</p>
+                        <div class="flex gap-1.5 mb-1.5">
+                            <div class="flex-1 bg-slate-50 rounded-lg h-6 border border-slate-200 flex items-center px-2 text-[9px] text-slate-400">Type a job title and press Enter…</div>
+                            <div class="bg-blue-50 text-blue-600 border border-blue-200 rounded-lg h-6 w-6 flex items-center justify-center text-[9px]"><i class="fa-solid fa-plus"></i></div>
+                        </div>
+                        <div class="flex flex-wrap gap-1 p-2 bg-slate-50/50 border border-dashed border-slate-200 rounded-lg min-h-[36px]">
+                            <span class="bg-blue-100 text-blue-700 rounded-full px-2 py-0.5 text-[8px] font-bold">Computer Technician</span>
+                            <span class="bg-blue-100 text-blue-700 rounded-full px-2 py-0.5 text-[8px] font-bold">PC Assembler</span>
+                        </div>
+                    </div>
+                    <div class="p-2.5 bg-slate-50 border border-slate-200 rounded-xl">
+                        <p class="text-[8px] font-black text-slate-500 uppercase tracking-widest mb-1.5">Qualification Summary</p>
+                        <div class="space-y-1 text-[9px]">
+                            <div class="flex justify-between"><span class="text-slate-500">Basic Competencies</span><span class="font-black text-blue-600">9 units</span></div>
+                            <div class="flex justify-between"><span class="text-slate-500">Common Competencies</span><span class="font-black text-blue-600">4 units</span></div>
+                            <div class="flex justify-between"><span class="text-slate-500">Core Competencies</span><span class="font-black text-emerald-600">6 units</span></div>
+                        </div>
+                    </div>
+                    <div class="p-2.5 bg-emerald-50/40 border border-emerald-100 rounded-xl">
+                        <p class="text-[8px] font-black text-emerald-700 uppercase tracking-widest">Core Units Added</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="space-y-3 text-sm text-slate-600 mb-4" style="counter-reset: step;">
+        <div class="step-num flex items-start p-3 bg-slate-50 rounded-xl"><div><strong class="text-slate-800">Details tab</strong> — enter the Title, pick a Sector and PQF Level, write a Description (or click AI Generate), and add Job Titles the graduate can hold (AI can suggest these too).</div></div>
+        <div class="step-num flex items-start p-3 bg-slate-50 rounded-xl"><div><strong class="text-slate-800">Watch the Qualification Summary</strong> — as you choose a PQF level and sector, the summary shows how many <strong>Basic</strong> units (by PQF level) and <strong>Common</strong> units (by sector) will be auto-assigned, plus a live total of nominal hours.</div></div>
+        <div class="step-num flex items-start p-3 bg-slate-50 rounded-xl"><div><strong class="text-slate-800">Add Core Competencies</strong> (see below) in the Core tab.</div></div>
+        <div class="step-num flex items-start p-3 bg-slate-50 rounded-xl"><div><strong class="text-slate-800">Click "Create Qualification"</strong> — the qualification is saved and the matching Basic + Common units are automatically attached to it.</div></div>
+    </div>
+    <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-8">
+        <p class="text-xs text-blue-800"><i class="fa-solid fa-wand-magic-sparkles text-blue-600 mr-1.5"></i><strong>Auto-assignment:</strong> When you create a qualification, the system automatically attaches all active <strong>Basic</strong> competencies for the chosen PQF level and all <strong>Common</strong> competencies for the chosen sector (the shared TESDA-standard ones, plus any your own institution created). You don't add these one by one — you only build the <strong>Core</strong> units, which are unique to this qualification.</p>
+    </div>
+
+    <!-- Component: The 3 competency types -->
+    <h3 class="text-lg font-bold text-slate-900 mb-3"><i class="fa-solid fa-cubes text-blue-500 mr-2"></i>Basic, Common &amp; Core Competencies</h3>
+    <div class="grid md:grid-cols-3 gap-4 mb-4 text-xs">
+        <div class="border border-slate-200 rounded-xl p-4">
+            <p class="font-bold text-slate-800 mb-1 flex items-center gap-2"><span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-purple-50 text-purple-600 text-[10px] font-bold"><i class="fa-solid fa-globe"></i> TESDA</span> Basic</p>
+            <p class="text-slate-500 leading-relaxed">TESDA-standard, shared to everyone, organized by PQF level (e.g., "Participate in workplace communication"). Staff see them read-only. Auto-assigned to your qualification by PQF level.</p>
+        </div>
+        <div class="border border-slate-200 rounded-xl p-4">
+            <p class="font-bold text-slate-800 mb-1">Common (per sector)</p>
+            <p class="text-slate-500 leading-relaxed">Shared per sector. There are two kinds: <span class="text-purple-600 font-bold">TESDA (global)</span> ones — read-only for staff — and <span class="text-emerald-600 font-bold">My Institution</span> ones your institution creates and can fully edit. Auto-assigned by sector.</p>
+        </div>
+        <div class="border border-slate-200 rounded-xl p-4">
+            <p class="font-bold text-slate-800 mb-1">Core (this qualification)</p>
+            <p class="text-slate-500 leading-relaxed">The technical skills unique to this qualification. You build these in the <strong>Core Competencies</strong> tab. Each core unit belongs to the qualification you're editing.</p>
+        </div>
+    </div>
+    <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-4 mb-4">
+        <p class="text-xs text-emerald-800"><i class="fa-solid fa-circle-check text-emerald-600 mr-1.5"></i><strong>How to tell them apart on screen:</strong> In the Common Competencies manager, each unit shows a badge — a purple <strong><i class="fa-solid fa-globe"></i> TESDA</strong> badge (global, read-only for staff) or a green <strong><i class="fa-solid fa-building"></i> My Institution</strong> badge (yours, editable). If a unit is read-only for you, its edit/delete controls are hidden and a lock banner explains why.</p>
+    </div>
+
+    <!-- UI Mock: Common Competencies management modal (accurate to platform) -->
+    <p class="text-sm text-slate-600 mb-3">Open the <strong>"Common Competencies"</strong> button (top of the CS Generator) to manage sector-specific common units:</p>
+    <div class="ui-mock mb-6">
+        <div class="ui-mock-header"><div class="ui-mock-dot bg-red-400"></div><div class="ui-mock-dot bg-yellow-400"></div><div class="ui-mock-dot bg-green-400"></div><span class="text-[10px] text-slate-400 ml-2">Common Competencies</span></div>
+        <div class="ui-mock-body bg-white p-0">
+            <div class="px-4 pt-3 pb-2 border-b border-slate-100">
+                <p class="text-xs font-black text-slate-900">Common Competencies</p>
+                <p class="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Manage sector-specific common competency units &amp; full unit details</p>
+            </div>
+            <div class="flex">
+                <!-- LEFT: sector select + unit list + new button -->
+                <div class="w-[40%] shrink-0 border-r border-slate-100 p-4 space-y-3">
+                    <div><p class="text-[8px] font-black text-slate-500 uppercase tracking-widest mb-1">Select Sector</p><div class="bg-slate-50 rounded-lg h-6 border border-slate-200 flex items-center justify-between px-2 text-[9px] text-slate-500">Automotive <i class="fa-solid fa-chevron-down text-[7px]"></i></div></div>
+                    <div>
+                        <p class="text-[8px] font-black text-slate-500 uppercase tracking-widest mb-2">Assigned Common Units</p>
+                        <div class="space-y-1.5">
+                            <div class="p-2 bg-slate-50 border border-slate-100 rounded-lg">
+                                <div class="flex items-center gap-1.5 flex-wrap mb-0.5">
+                                    <span class="text-[8px] font-mono text-blue-600 bg-blue-50 px-1 rounded">500311105</span>
+                                    <span class="text-[8px] font-bold text-purple-600 bg-purple-50 px-1.5 py-0.5 rounded"><i class="fa-solid fa-globe mr-0.5"></i>TESDA</span>
+                                    <span class="text-[7px] font-bold text-slate-400 bg-slate-100 px-1.5 py-0.5 rounded uppercase">Read-only</span>
+                                </div>
+                                <p class="text-[9px] font-bold text-slate-700">Apply appropriate sealant/adhesive</p>
+                            </div>
+                            <div class="p-2 bg-slate-50 border border-slate-100 rounded-lg">
+                                <div class="flex items-center gap-1.5 flex-wrap mb-0.5">
+                                    <span class="text-[8px] font-mono text-blue-600 bg-blue-50 px-1 rounded">INST-C01</span>
+                                    <span class="text-[8px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded"><i class="fa-solid fa-building mr-0.5"></i>My Institution</span>
+                                </div>
+                                <p class="text-[9px] font-bold text-slate-700">Perform shop housekeeping (institution)</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-t border-slate-100 pt-3">
+                        <div class="w-full py-2 bg-blue-600 text-white rounded-xl text-center text-[9px] font-black uppercase tracking-widest"><i class="fa-solid fa-plus mr-1"></i>New Common Unit</div>
+                    </div>
+                </div>
+                <!-- RIGHT: detail editor placeholder + read-only banner -->
+                <div class="flex-1 p-4">
+                    <div class="mb-2 flex items-start gap-2 p-2 rounded-lg bg-purple-50 border border-purple-200">
+                        <i class="fa-solid fa-lock text-purple-500 text-[9px] mt-0.5"></i>
+                        <p class="text-[8px] text-purple-700 leading-snug"><strong>View-only — TESDA standard unit.</strong> This is a shared TESDA-managed common competency. To have your own editable version, create a common unit under your institution.</p>
+                    </div>
+                    <p class="text-[8px] font-black text-slate-500 uppercase tracking-widest mb-1">Unit Information</p>
+                    <div class="grid grid-cols-4 gap-1.5 mb-1.5">
+                        <div class="bg-slate-50 rounded h-5 border border-slate-200"></div>
+                        <div class="col-span-2 bg-slate-50 rounded h-5 border border-slate-200"></div>
+                        <div class="bg-slate-50 rounded h-5 border border-slate-200"></div>
+                    </div>
+                    <p class="text-[7px] text-slate-400 italic">Selecting one of <em>your</em> institution's units shows the full editor (Elements, Range of Variables, Evidence Guide) with AI Generate buttons — the same layout as the Core unit editor above.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-8">
+        <p class="text-xs text-amber-800"><i class="fa-solid fa-triangle-exclamation text-amber-600 mr-1.5"></i><strong>Staff note:</strong> You cannot edit TESDA-standard (global) Basic or Common units — they're maintained centrally. To have your own editable version, create a Common unit under your institution (it gets the green "My Institution" badge).</p>
+    </div>
+
+    <!-- Component: Core unit editor + cascade -->
+    <h3 class="text-lg font-bold text-slate-900 mb-3"><i class="fa-solid fa-list-check text-emerald-500 mr-2"></i>Building a Core Unit (the cascade)</h3>
+    <p class="text-sm text-slate-600 mb-4">Inside a core unit you fill three layers, in order — each feeds the next, so the AI gets smarter as you go:</p>
+
+    <!-- UI Mock: core unit editor (accurate to platform) -->
+    <div class="ui-mock mb-6">
+        <div class="ui-mock-header"><div class="ui-mock-dot bg-red-400"></div><div class="ui-mock-dot bg-yellow-400"></div><div class="ui-mock-dot bg-green-400"></div><span class="text-[10px] text-slate-400 ml-2">New Qualification — Core Competencies tab</span></div>
+        <div class="ui-mock-body bg-white p-0">
+            <div class="flex">
+                <!-- LEFT PANEL: Core Competency Units (380px) -->
+                <div class="w-[38%] shrink-0 border-r border-slate-100 p-4 flex flex-col">
+                    <p class="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-3">Core Competency Units</p>
+                    <div class="space-y-2 flex-1">
+                        <div class="p-2.5 bg-emerald-50 border border-emerald-200 rounded-xl">
+                            <p class="text-[9px] font-mono text-emerald-600">AUTO-001</p>
+                            <p class="text-[10px] font-bold text-slate-700 leading-tight">Service automotive engine systems</p>
+                        </div>
+                        <div class="p-2.5 bg-slate-50 border border-slate-100 rounded-xl">
+                            <p class="text-[9px] font-mono text-slate-400">AUTO-002</p>
+                            <p class="text-[10px] font-bold text-slate-500 leading-tight">Perform under-chassis servicing</p>
+                        </div>
+                    </div>
+                    <div class="border-t border-slate-100 pt-3 mt-3">
+                        <div class="w-full py-2 bg-emerald-600 text-white rounded-xl text-center text-[9px] font-black uppercase tracking-widest"><i class="fa-solid fa-plus mr-1"></i>New Core Unit</div>
+                    </div>
+                </div>
+                <!-- RIGHT PANEL: Unit Detail Editor -->
+                <div class="flex-1 p-4 space-y-3">
+                    <!-- Unit Information card -->
+                    <div class="bg-slate-50 rounded-xl p-3 border border-slate-100">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center gap-1.5"><div class="h-4 w-1 bg-emerald-600 rounded-full"></div><span class="text-[9px] font-black text-slate-500 uppercase tracking-widest">Unit Information</span></div>
+                            <div class="flex items-center gap-1.5">
+                                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-purple-50 text-purple-600 border border-purple-200 text-[8px] font-bold"><i class="fa-solid fa-wand-magic-sparkles"></i> AI Descriptor</span>
+                                <span class="text-[8px] font-mono text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded">ID: 12</span>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-4 gap-1.5 mb-1.5">
+                            <div><p class="text-[7px] font-black text-slate-400 uppercase mb-0.5">Code</p><div class="bg-white rounded h-5 border border-slate-200"></div></div>
+                            <div class="col-span-2"><p class="text-[7px] font-black text-slate-400 uppercase mb-0.5">Title</p><div class="bg-white rounded h-5 border border-slate-200"></div></div>
+                            <div><p class="text-[7px] font-black text-slate-400 uppercase mb-0.5">Hours</p><div class="bg-white rounded h-5 border border-slate-200"></div></div>
+                        </div>
+                        <p class="text-[7px] font-black text-slate-400 uppercase mb-0.5">Descriptor</p>
+                        <div class="bg-white rounded h-7 border border-slate-200"></div>
+                    </div>
+                    <!-- Elements & Performance Criteria -->
+                    <div class="flex items-center justify-between">
+                        <span class="text-[10px] font-black text-slate-700 uppercase tracking-wide"><i class="fa-solid fa-list-check text-blue-500 mr-1"></i>Elements &amp; Performance Criteria</span>
+                        <div class="flex gap-1.5">
+                            <span class="px-2 py-1 bg-purple-50 text-purple-600 border border-purple-200 rounded-lg text-[8px] font-bold"><i class="fa-solid fa-wand-magic-sparkles mr-0.5"></i>AI Generate</span>
+                            <span class="px-2 py-1 bg-blue-600 text-white rounded-lg text-[8px] font-black uppercase"><i class="fa-solid fa-plus mr-0.5"></i>Add Element</span>
+                        </div>
+                    </div>
+                    <div class="border border-dashed border-slate-200 rounded-xl py-2 text-center text-[8px] text-slate-400">No elements defined yet</div>
+                    <!-- Range of Variables -->
+                    <div class="flex items-center justify-between">
+                        <span class="text-[10px] font-black text-slate-700 uppercase tracking-wide"><i class="fa-solid fa-sliders text-orange-500 mr-1"></i>Range of Variables</span>
+                        <div class="flex gap-1.5">
+                            <span class="px-2 py-1 bg-purple-50 text-purple-600 border border-purple-200 rounded-lg text-[8px] font-bold"><i class="fa-solid fa-wand-magic-sparkles mr-0.5"></i>AI Generate</span>
+                            <span class="px-2 py-1 bg-orange-600 text-white rounded-lg text-[8px] font-black uppercase"><i class="fa-solid fa-plus mr-0.5"></i>Add Variable</span>
+                        </div>
+                    </div>
+                    <!-- Evidence Guide -->
+                    <div class="flex items-center justify-between">
+                        <span class="text-[10px] font-black text-slate-700 uppercase tracking-wide"><i class="fa-solid fa-clipboard-check text-rose-500 mr-1"></i>Evidence Guide</span>
+                        <span class="px-2 py-1 bg-purple-50 text-purple-600 border border-purple-200 rounded-lg text-[8px] font-bold"><i class="fa-solid fa-wand-magic-sparkles mr-0.5"></i>AI Generate</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-1.5">
+                        <div class="border border-slate-200 rounded-lg p-1.5"><p class="text-[7px] font-black text-slate-500 uppercase">Critical Aspects of Competency</p></div>
+                        <div class="border border-slate-200 rounded-lg p-1.5"><p class="text-[7px] font-black text-slate-500 uppercase">Resource Implications</p></div>
+                        <div class="border border-slate-200 rounded-lg p-1.5"><p class="text-[7px] font-black text-slate-500 uppercase">Methods of Assessment</p></div>
+                        <div class="border border-slate-200 rounded-lg p-1.5"><p class="text-[7px] font-black text-slate-500 uppercase">Context of Assessment</p></div>
+                    </div>
+                    <!-- Sticky footer -->
+                    <div class="flex gap-2 pt-2 border-t border-slate-100">
+                        <div class="flex-1 py-1.5 bg-white border border-slate-200 text-slate-500 rounded-xl text-center text-[8px] font-black uppercase"><i class="fa-solid fa-xmark mr-1"></i>Cancel</div>
+                        <div class="flex-[2] py-1.5 bg-emerald-600 text-white rounded-xl text-center text-[8px] font-black uppercase"><i class="fa-solid fa-floppy-disk mr-1"></i>Save Unit Changes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="space-y-3 text-sm text-slate-600 mb-4" style="counter-reset: step;">
+        <div class="step-num flex items-start p-3 bg-slate-50 rounded-xl"><div><strong class="text-slate-800">Add a unit</strong> — click "+ New core unit", then type a code/title, or click <span class="text-purple-600 font-bold">AI Generate Unit</span> to have the AI propose a whole new unit (code, title, descriptor, hours) from the qualification — it even avoids duplicating units you already have. On a blank unit, the <strong>AI Descriptor</strong> button also generates a full unit from the qualification's details, so you never face an empty box.</div></div>
+        <div class="step-num flex items-start p-3 bg-slate-50 rounded-xl"><div><strong class="text-slate-800">Elements → Criteria, Knowledge, Skills</strong> — click AI Generate to draft the elements. Each element carries Performance Criteria, Required Knowledge, and Required Skills.</div></div>
+        <div class="step-num flex items-start p-3 bg-slate-50 rounded-xl"><div><strong class="text-slate-800">Range of Variables</strong> — click AI Generate; it uses your elements/criteria (plus the knowledge &amp; skills) to draft the tools, materials, and contexts the unit applies to.</div></div>
+        <div class="step-num flex items-start p-3 bg-slate-50 rounded-xl"><div><strong class="text-slate-800">Evidence Guide</strong> — click AI Generate; it uses the elements and range of variables to draft the 4 assessment sections (critical aspects, resources, methods, context).</div></div>
+        <div class="step-num flex items-start p-3 bg-slate-50 rounded-xl"><div><strong class="text-slate-800">Click "Save Unit Changes"</strong> — see the important note below about when this persists.</div></div>
+    </div>
+    <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-8">
+        <p class="text-xs text-blue-800"><i class="fa-solid fa-floppy-disk text-blue-600 mr-1.5"></i><strong>Save behavior:</strong> When you are <strong>editing an existing qualification</strong>, "Save Unit Changes" saves that core unit (and its elements/range/evidence) to the database <em>immediately</em>. When you are still <strong>creating a brand-new qualification</strong> (not yet saved), core units are held in the editor and are stored together when you click the big <strong>"Create Qualification"</strong> button — so don't close the modal before creating it.</p>
+    </div>
+
+    <!-- Component: Section 3 -->
+    <h3 class="text-lg font-bold text-slate-900 mb-3"><i class="fa-solid fa-clipboard-list text-rose-500 mr-2"></i>Section 3 — Training Requirements</h3>
+    <p class="text-sm text-slate-600 mb-4">The <strong>Training Requirements</strong> tab has four AI-assisted parts. Each is grounded in your qualification's real content, so build your competency units first for the most accurate drafts:</p>
+
+    <!-- UI Mock: Section 3 Training Requirements (accurate to platform) -->
+    <div class="ui-mock mb-6">
+        <div class="ui-mock-header"><div class="ui-mock-dot bg-red-400"></div><div class="ui-mock-dot bg-yellow-400"></div><div class="ui-mock-dot bg-green-400"></div><span class="text-[10px] text-slate-400 ml-2">New Qualification — Training Requirements tab</span></div>
+        <div class="ui-mock-body bg-white space-y-2">
+            <!-- Class size -->
+            <div class="flex items-center gap-2 p-2.5 bg-amber-50 rounded-xl border border-amber-100">
+                <i class="fa-solid fa-users text-amber-600 text-[10px]"></i>
+                <div><p class="text-[8px] font-black text-slate-500 uppercase tracking-widest">Maximum Class Size</p><div class="bg-white rounded-lg h-5 w-16 border border-amber-200 mt-0.5 flex items-center px-2 text-[9px] font-bold text-slate-700">25</div></div>
+            </div>
+            <!-- 3.1 -->
+            <div class="border border-slate-200 rounded-xl overflow-hidden">
+                <div class="flex items-center justify-between px-3 py-2 bg-slate-50 border-b border-slate-200">
+                    <span class="text-[9px] font-black text-slate-700 uppercase tracking-wider"><i class="fa-solid fa-chevron-down text-[7px] text-slate-400 mr-1.5"></i>3.1 Trainee Entry Requirements</span>
+                    <span class="px-2 py-1 bg-violet-600 text-white rounded-lg text-[8px] font-bold"><i class="fa-solid fa-wand-magic-sparkles mr-0.5"></i>AI Generate</span>
+                </div>
+                <div class="p-2.5 space-y-1.5">
+                    <div class="bg-slate-50 rounded h-4 border border-slate-100"></div>
+                    <div class="w-full py-1 border border-dashed border-slate-200 rounded-lg text-center text-[8px] font-bold text-slate-400"><i class="fa-solid fa-plus mr-0.5"></i>Add Requirement</div>
+                </div>
+            </div>
+            <!-- 3.2 -->
+            <div class="border border-slate-200 rounded-xl overflow-hidden">
+                <div class="flex items-center justify-between px-3 py-2 bg-slate-50 border-b border-slate-200">
+                    <span class="text-[9px] font-black text-slate-700 uppercase tracking-wider"><i class="fa-solid fa-chevron-right text-[7px] text-slate-400 mr-1.5"></i>3.2 Trainers Qualifications</span>
+                    <span class="px-2 py-1 bg-violet-600 text-white rounded-lg text-[8px] font-bold"><i class="fa-solid fa-wand-magic-sparkles mr-0.5"></i>AI Generate</span>
+                </div>
+            </div>
+            <!-- 3.3 -->
+            <div class="border border-slate-200 rounded-xl overflow-hidden">
+                <div class="flex items-center justify-between px-3 py-2 bg-slate-50 border-b border-slate-200">
+                    <span class="text-[9px] font-black text-slate-700 uppercase tracking-wider"><i class="fa-solid fa-chevron-down text-[7px] text-slate-400 mr-1.5"></i>3.3 List of Tools, Equipment and Materials</span>
+                    <span class="px-2 py-1 bg-violet-600 text-white rounded-lg text-[8px] font-bold"><i class="fa-solid fa-wand-magic-sparkles mr-0.5"></i>AI Generate</span>
+                </div>
+                <div class="p-2.5 grid grid-cols-3 gap-2">
+                    <div><p class="text-[7px] font-black text-slate-500 uppercase">Tools</p><div class="bg-slate-50 rounded h-4 border border-slate-100 mt-0.5"></div></div>
+                    <div><p class="text-[7px] font-black text-slate-500 uppercase">Equipment</p><div class="bg-slate-50 rounded h-4 border border-slate-100 mt-0.5"></div></div>
+                    <div><p class="text-[7px] font-black text-slate-500 uppercase">Materials</p><div class="bg-slate-50 rounded h-4 border border-slate-100 mt-0.5"></div></div>
+                </div>
+            </div>
+            <!-- 3.4 -->
+            <div class="border border-slate-200 rounded-xl overflow-hidden">
+                <div class="flex items-center justify-between px-3 py-2 bg-slate-50 border-b border-slate-200">
+                    <span class="text-[9px] font-black text-slate-700 uppercase tracking-wider"><i class="fa-solid fa-chevron-right text-[7px] text-slate-400 mr-1.5"></i>3.4 Training Facilities</span>
+                    <span class="px-2 py-1 bg-violet-600 text-white rounded-lg text-[8px] font-bold"><i class="fa-solid fa-wand-magic-sparkles mr-0.5"></i>AI Generate</span>
+                </div>
+            </div>
+            <div class="flex justify-end pt-1">
+                <span class="px-4 py-1.5 bg-blue-600 text-white rounded-xl text-[9px] font-black uppercase tracking-widest"><i class="fa-solid fa-floppy-disk mr-1"></i>Save Training Requirements</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid sm:grid-cols-2 gap-3 mb-4 text-xs">
+        <div class="border border-slate-200 rounded-xl p-4"><p class="font-bold text-slate-800 mb-1">3.1 Trainee Entry Requirements <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-purple-50 text-purple-600 text-[9px]"><i class="fa-solid fa-wand-magic-sparkles"></i>AI</span></p><p class="text-slate-500">Prerequisites a trainee needs. AI draws on the PQF level, sector, core units, and the units' <strong>Required Knowledge</strong>.</p></div>
+        <div class="border border-slate-200 rounded-xl p-4"><p class="font-bold text-slate-800 mb-1">3.2 Trainer Qualifications <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-purple-50 text-purple-600 text-[9px]"><i class="fa-solid fa-wand-magic-sparkles"></i>AI</span></p><p class="text-slate-500">What a trainer must have (NC, TM Level I, industry experience). AI uses the units' <strong>Range of Variables</strong> to name the specific tools/tech a trainer must know.</p></div>
+        <div class="border border-slate-200 rounded-xl p-4"><p class="font-bold text-slate-800 mb-1">3.3 Tools, Equipment &amp; Materials <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-purple-50 text-purple-600 text-[9px]"><i class="fa-solid fa-wand-magic-sparkles"></i>AI</span></p><p class="text-slate-500">Three lists with quantities sized for your class size. AI extracts real items from the Range of Variables and considers your qualification description. Set your <strong>class size</strong> here.</p></div>
+        <div class="border border-slate-200 rounded-xl p-4"><p class="font-bold text-slate-800 mb-1">3.4 Training Facilities <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-purple-50 text-purple-600 text-[9px]"><i class="fa-solid fa-wand-magic-sparkles"></i>AI</span></p><p class="text-slate-500">Areas/spaces with sizes, computed from class size and the tools/equipment. <strong>Requires the Tools/Equipment/Materials list first</strong> — the button will prompt you if it's empty.</p></div>
+    </div>
+    <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-8">
+        <p class="text-xs text-amber-800"><i class="fa-solid fa-lightbulb text-amber-600 mr-1.5"></i><strong>Best order for accuracy:</strong> build core units (elements → range of variables → evidence) → set class size &amp; generate Tools/Equipment/Materials → then generate Training Facilities → then Trainee &amp; Trainer requirements. Regenerating any AI section <em>replaces</em> what was there, so finalize edits after generating.</p>
+    </div>
+
+    <!-- Component: Acknowledgements + DOCX -->
+    <div class="grid md:grid-cols-2 gap-4 mb-8">
+        <div class="border border-slate-200 rounded-xl p-4">
+            <p class="font-bold text-slate-800 mb-1 text-sm"><i class="fa-solid fa-handshake-angle text-teal-500 mr-1.5"></i>Acknowledgements</p>
+            <p class="text-xs text-slate-500 leading-relaxed">The <strong>Acknowledgements</strong> tab lets you add an intro paragraph and groups of people/organizations (with names, positions, organizations, emails). TESDA-staff groups render as a clean 3-column table in the final document.</p>
+        </div>
+        <div class="border border-slate-200 rounded-xl p-4">
+            <p class="font-bold text-slate-800 mb-1 text-sm"><i class="fa-solid fa-file-word text-blue-500 mr-1.5"></i>Export to Word (.docx)</p>
+            <p class="text-xs text-slate-500 leading-relaxed">Open a qualification and click <strong>"Download .docx"</strong> to get the full, formatted document: cover page, the legal page (the RA 7796 "Technical Education and Skills Development Act of 1994" — which always starts on page 2), purpose, table of contents, Section 1 &amp; 2 (all units), Section 3, and Acknowledgements.</p>
+        </div>
+    </div>
+
+    <!-- AI quota callout (shared with CBC) -->
+    <div class="bg-gradient-to-r from-indigo-50 to-blue-50 border border-indigo-200 rounded-2xl p-5">
+        <p class="text-sm font-bold text-slate-900 mb-2 flex items-center gap-2"><i class="fa-solid fa-gauge-high text-indigo-600"></i> Daily AI Generation Quota</p>
+        <p class="text-xs text-slate-600 leading-relaxed">Every AI Generate action in the <strong>CS and CBC generators</strong> counts against your institution's <strong>daily AI quota</strong> (course/module/exam AI is separate and not counted here). Each <em>successful</em> generation counts as one; internal retries don't. The quota <strong>resets at midnight Philippine time (UTC+8)</strong>. If you hit the limit you'll see a clear message telling you the cap and when it resets. Your remaining quota is shown as the <strong>"AI Generation Quota (CS &amp; CBC generators only)"</strong> panel on the Staff Console. The limit can be raised per institution via its subscription plan.</p>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- COMPETENCY-BASED CURRICULUM (CBC) GENERATOR -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section id="cbc-generator" class="mb-20">
+    <div class="flex items-center gap-3 mb-2">
+        <div class="h-9 w-9 rounded-xl bg-violet-100 text-violet-600 flex items-center justify-center"><i class="fa-solid fa-book-open"></i></div>
+        <h2 class="text-2xl font-black text-slate-900">CBC Generator</h2>
+    </div>
+    <p class="text-sm text-slate-500 mb-8 max-w-2xl">The <strong>Competency-Based Curriculum (CBC) Generator</strong> turns a finished Competency Standard into a training curriculum — the document trainers actually deliver from — and exports it as a formatted Word file. It is a <strong>derived</strong> document: it reads your CS content live and reshapes it into curriculum form, so you never re-encode competencies.</p>
+
+    <div class="bg-violet-50 border border-violet-200 rounded-2xl p-5 mb-8">
+        <div class="flex items-start gap-3">
+            <i class="fa-solid fa-diagram-project text-violet-600 mt-0.5"></i>
+            <div>
+                <p class="text-sm font-bold text-violet-900 mb-1">CS → CBC: what maps to what</p>
+                <p class="text-xs text-violet-700 leading-relaxed">A <strong>CBC is built from a CS Qualification</strong>. The generator transforms it: Qualification → Course · Unit of Competency → <strong>Module of Instruction</strong> (title converted to <em>-ing</em> "gerund" form) · Element → <strong>Learning Outcome</strong> · Performance Criteria → Assessment Criteria · Knowledge + Skills → Contents · Range of Variables → Conditions · Evidence Guide methods → Assessment Methods. You work only with your <strong>own institution's</strong> qualifications and curricula.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gerund explainer -->
+    <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-8">
+        <p class="text-xs text-blue-800"><i class="fa-solid fa-wand-sparkles text-blue-600 mr-1.5"></i><strong>The "gerund" module titles:</strong> A unit named "<em>Receive and respond to workplace communication</em>" becomes the module "<em>Receiving and Responding to Workplace Communication</em>". The generator does this automatically; a <strong>Gerund Review</strong> tab lets you check and override any title that doesn't read well.</p>
+    </div>
+
+    <!-- UI Mock: CBC editor (accurate to platform) -->
+    <div class="ui-mock mb-8">
+        <div class="ui-mock-header"><div class="ui-mock-dot bg-red-400"></div><div class="ui-mock-dot bg-yellow-400"></div><div class="ui-mock-dot bg-green-400"></div><span class="text-[10px] text-slate-400 ml-2">CBC Generator — Editor</span></div>
+        <div class="ui-mock-body bg-white">
+            <!-- Modal header -->
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-3">
+                <div>
+                    <p class="text-xs font-black text-slate-900">Edit CBC</p>
+                    <p class="text-[9px] text-slate-400">Automotive Servicing NC I</p>
+                </div>
+                <div class="flex items-center gap-1.5">
+                    <span class="inline-flex items-center gap-1 rounded-lg bg-emerald-600 px-2.5 py-1 text-[9px] font-bold text-white"><i class="fa-solid fa-file-word"></i> Download DOCX</span>
+                    <i class="fa-solid fa-xmark text-slate-400"></i>
+                </div>
+            </div>
+            <!-- Tabs -->
+            <div class="flex gap-1 border-b border-slate-100 mb-3 flex-wrap">
+                <span class="px-3 py-1.5 text-[10px] font-bold border-b-2 border-blue-600 text-blue-600">Course Design</span>
+                <span class="px-3 py-1.5 text-[10px] font-bold border-b-2 border-transparent text-slate-400">Modules &amp; Learning Outcomes</span>
+                <span class="px-3 py-1.5 text-[10px] font-bold border-b-2 border-transparent text-slate-400">Resources</span>
+                <span class="px-3 py-1.5 text-[10px] font-bold border-b-2 border-transparent text-slate-400">Gerund Review</span>
+            </div>
+            <!-- Course Design tab body -->
+            <div class="space-y-2.5">
+                <div class="grid grid-cols-2 gap-2">
+                    <div><p class="text-[8px] font-bold text-slate-500 uppercase tracking-widest mb-0.5">Course Title</p><div class="bg-slate-50 rounded-lg h-6 border border-slate-200"></div></div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div><p class="text-[8px] font-bold text-slate-500 uppercase tracking-widest mb-0.5">Elective Hours</p><div class="bg-slate-50 rounded-lg h-6 border border-slate-200 flex items-center px-2 text-[9px] text-slate-400">N/A</div></div>
+                        <div><p class="text-[8px] font-bold text-slate-500 uppercase tracking-widest mb-0.5">SIL Hours</p><div class="bg-slate-50 rounded-lg h-6 border border-slate-200 flex items-center px-2 text-[9px] text-slate-400">N/A</div></div>
+                    </div>
+                </div>
+                <div><p class="text-[8px] font-bold text-slate-500 uppercase tracking-widest mb-0.5">Course Description</p><div class="bg-slate-50 rounded-lg h-8 border border-slate-200"></div></div>
+                <!-- 4 hour cards -->
+                <div class="grid grid-cols-4 gap-2">
+                    <div class="rounded-xl bg-slate-50 p-2 text-center"><p class="text-[8px] font-bold text-slate-400 uppercase">Basic</p><p class="text-base font-black text-slate-800">18</p></div>
+                    <div class="rounded-xl bg-slate-50 p-2 text-center"><p class="text-[8px] font-bold text-slate-400 uppercase">Common</p><p class="text-base font-black text-slate-800">24</p></div>
+                    <div class="rounded-xl bg-slate-50 p-2 text-center"><p class="text-[8px] font-bold text-slate-400 uppercase">Core</p><p class="text-base font-black text-slate-800">120</p></div>
+                    <div class="rounded-xl bg-blue-50 p-2 text-center"><p class="text-[8px] font-bold text-blue-400 uppercase">Total</p><p class="text-base font-black text-blue-700">162</p></div>
+                </div>
+                <!-- Annotations -->
+                <div class="grid grid-cols-3 gap-2">
+                    <div><p class="text-[8px] font-bold text-slate-500 uppercase tracking-widest mb-0.5">Basic Annotation</p><div class="bg-slate-50 rounded-lg h-5 border border-slate-200"></div></div>
+                    <div><p class="text-[8px] font-bold text-slate-500 uppercase tracking-widest mb-0.5">Common Annotation</p><div class="bg-slate-50 rounded-lg h-5 border border-slate-200"></div></div>
+                    <div><p class="text-[8px] font-bold text-slate-500 uppercase tracking-widest mb-0.5">Core Annotation</p><div class="bg-slate-50 rounded-lg h-5 border border-slate-200"></div></div>
+                </div>
+                <div class="flex justify-end pt-1">
+                    <span class="rounded-lg bg-blue-600 px-3 py-1.5 text-[9px] font-bold text-white">Save Course Design</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- UI Mocks: the other CBC tabs -->
+    <h3 class="text-lg font-bold text-slate-900 mb-3"><i class="fa-solid fa-window-restore text-violet-500 mr-2"></i>The Editor Tabs</h3>
+    <p class="text-sm text-slate-600 mb-4">Besides <strong>Course Design</strong> (shown above), the editor has three more tabs:</p>
+
+    <!-- Modules & Learning Outcomes tab -->
+    <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Modules &amp; Learning Outcomes</p>
+    <div class="ui-mock mb-6">
+        <div class="ui-mock-header"><div class="ui-mock-dot bg-red-400"></div><div class="ui-mock-dot bg-yellow-400"></div><div class="ui-mock-dot bg-green-400"></div><span class="text-[10px] text-slate-400 ml-2">CBC Editor — Modules &amp; Learning Outcomes</span></div>
+        <div class="ui-mock-body bg-white space-y-2">
+            <p class="text-[9px] text-slate-400">Each module maps to a CS unit; Learning Outcomes come from the unit's elements. Edit fields (one item per line); blank fields fall back to auto-derived values.</p>
+            <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Core Competencies</p>
+            <div class="rounded-xl border border-slate-200 overflow-hidden">
+                <div class="bg-slate-50 px-3 py-2">
+                    <p class="text-[8px] text-slate-400">Unit of Competency · 20h · 3 LO(s)</p>
+                    <p class="text-[10px] font-semibold text-slate-700">Service automotive engine systems</p>
+                    <p class="text-[10px] font-bold text-blue-700"><i class="fa-solid fa-arrow-right-long text-[8px] mx-1 text-slate-300"></i>Servicing Automotive Engine Systems</p>
+                </div>
+                <div class="p-3 space-y-2 border-t border-slate-100">
+                    <p class="text-[10px] font-bold text-slate-800">LO1. Diagnose engine faults</p>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div><p class="text-[7px] font-black text-slate-400 uppercase">Contents (one per line)</p><div class="bg-slate-50 rounded h-6 border border-slate-200 mt-0.5"></div></div>
+                        <div><p class="text-[7px] font-black text-slate-400 uppercase">Conditions (one per line)</p><div class="bg-slate-50 rounded h-6 border border-slate-200 mt-0.5"></div></div>
+                        <div><p class="text-[7px] font-black text-slate-400 uppercase">Methodologies (one per line)</p><div class="bg-slate-50 rounded h-6 border border-slate-200 mt-0.5"></div></div>
+                        <div><p class="text-[7px] font-black text-slate-400 uppercase">Assessment Methods (one per line)</p><div class="bg-slate-50 rounded h-6 border border-slate-200 mt-0.5"></div></div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <p class="text-[7px] text-slate-400 italic">Assessment Criteria are inherited verbatim from the CS (read-only).</p>
+                        <div class="flex gap-1.5">
+                            <span class="rounded-lg bg-violet-100 px-2 py-1 text-[8px] font-bold text-violet-700"><i class="fa-solid fa-wand-magic-sparkles mr-0.5"></i>AI Draft</span>
+                            <span class="rounded-lg bg-slate-800 px-2 py-1 text-[8px] font-bold text-white">Save LO1</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6">
+        <p class="text-xs text-blue-800"><i class="fa-solid fa-wand-magic-sparkles text-blue-600 mr-1.5"></i>Only <strong>Conditions</strong> and <strong>Methodologies</strong> lack a direct CS source, so the <strong>AI Draft</strong> button focuses on those — it drafts them from the outcome's CS context (element title, assessment criteria, knowledge &amp; skills). Contents and Assessment Methods auto-derive from the CS if you leave them blank.</p>
+    </div>
+
+    <!-- Resources tab -->
+    <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Resources</p>
+    <div class="ui-mock mb-6">
+        <div class="ui-mock-header"><div class="ui-mock-dot bg-red-400"></div><div class="ui-mock-dot bg-yellow-400"></div><div class="ui-mock-dot bg-green-400"></div><span class="text-[10px] text-slate-400 ml-2">CBC Editor — Resources</span></div>
+        <div class="ui-mock-body bg-white space-y-3">
+            <div>
+                <div class="flex items-center justify-between mb-1.5">
+                    <span class="text-[10px] font-black text-slate-700 uppercase tracking-widest">Contextual Learning Area</span>
+                    <div class="flex items-center gap-2">
+                        <span class="px-2 py-1 bg-purple-50 text-purple-600 border border-purple-200 rounded-lg text-[8px] font-bold"><i class="fa-solid fa-wand-magic-sparkles mr-0.5"></i>AI Generate</span>
+                        <span class="text-[8px] font-bold text-blue-600"><i class="fa-solid fa-plus"></i> Add row</span>
+                    </div>
+                </div>
+                <div class="grid grid-cols-12 gap-1.5">
+                    <div class="col-span-2 bg-slate-50 rounded h-5 border border-slate-200 flex items-center justify-center text-[8px] text-slate-400">Qty</div>
+                    <div class="col-span-2 bg-slate-50 rounded h-5 border border-slate-200 flex items-center justify-center text-[8px] text-slate-400">Unit</div>
+                    <div class="col-span-7 bg-slate-50 rounded h-5 border border-slate-200 flex items-center px-2 text-[8px] text-slate-400">Lecture / Discussion Area</div>
+                    <div class="col-span-1 flex items-center justify-center text-rose-300 text-[8px]"><i class="fa-solid fa-trash"></i></div>
+                </div>
+            </div>
+            <div>
+                <div class="flex items-center justify-between mb-1.5">
+                    <span class="text-[10px] font-black text-slate-700 uppercase tracking-widest">Learning Resource Area</span>
+                    <div class="flex items-center gap-2">
+                        <span class="px-2 py-1 bg-purple-50 text-purple-600 border border-purple-200 rounded-lg text-[8px] font-bold"><i class="fa-solid fa-wand-magic-sparkles mr-0.5"></i>AI Generate</span>
+                        <span class="text-[8px] font-bold text-blue-600"><i class="fa-solid fa-plus"></i> Add row</span>
+                    </div>
+                </div>
+                <div class="grid grid-cols-12 gap-1.5">
+                    <div class="col-span-2 bg-slate-50 rounded h-5 border border-slate-200 flex items-center justify-center text-[8px] text-slate-400">Qty</div>
+                    <div class="col-span-2 bg-slate-50 rounded h-5 border border-slate-200 flex items-center justify-center text-[8px] text-slate-400">Unit</div>
+                    <div class="col-span-7 bg-slate-50 rounded h-5 border border-slate-200 flex items-center px-2 text-[8px] text-slate-400">Library / Learning Resource Area</div>
+                    <div class="col-span-1 flex items-center justify-center text-rose-300 text-[8px]"><i class="fa-solid fa-trash"></i></div>
+                </div>
+            </div>
+            <div class="flex justify-end pt-1"><span class="rounded-lg bg-blue-600 px-3 py-1.5 text-[9px] font-bold text-white">Save Resource Areas</span></div>
+        </div>
+    </div>
+
+    <!-- Gerund Review tab -->
+    <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Gerund Review</p>
+    <div class="ui-mock mb-8">
+        <div class="ui-mock-header"><div class="ui-mock-dot bg-red-400"></div><div class="ui-mock-dot bg-yellow-400"></div><div class="ui-mock-dot bg-green-400"></div><span class="text-[10px] text-slate-400 ml-2">CBC Editor — Gerund Review</span></div>
+        <div class="ui-mock-body bg-white space-y-2">
+            <p class="text-[9px] text-slate-400">Review the auto-generated gerund module titles. Override any that read incorrectly; leave blank to keep the computed value.</p>
+            <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Core Competencies</p>
+            <div class="rounded-xl border border-slate-100 px-3 py-2 grid grid-cols-2 gap-3 items-center">
+                <div>
+                    <p class="text-[7px] text-slate-400 uppercase tracking-widest">Unit Title</p>
+                    <p class="text-[10px] text-slate-600">Service automotive engine systems</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div class="flex-1 rounded-lg border border-slate-200 px-2 py-1.5 text-[9px] font-semibold text-blue-700">Servicing Automotive Engine Systems</div>
+                    <span class="rounded-lg bg-slate-800 px-2.5 py-1.5 text-[8px] font-bold text-white">Save</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Workflow -->
+    <h3 class="text-lg font-bold text-slate-900 mb-3"><i class="fa-solid fa-list-ol text-violet-500 mr-2"></i>Creating a CBC — Step by Step</h3>
+    <div class="space-y-3 text-sm text-slate-600 mb-8" style="counter-reset: step;">
+        <div class="step-num flex items-start p-3 bg-slate-50 rounded-xl"><div><strong class="text-slate-800">Click "New CBC"</strong> and pick an eligible <strong>CS Qualification</strong>. The list shows how many competency units each qualification has and how many CBCs already exist for it.</div></div>
+        <div class="step-num flex items-start p-3 bg-slate-50 rounded-xl"><div><strong class="text-slate-800">Course Design tab</strong> — review the auto-computed Basic/Common/Core hours and total; fill Course Title, Description, Delivery, and Assessment Methods. Set <strong>Elective Hours</strong> and <strong>SIL Hours</strong> here if applicable (see note below).</div></div>
+        <div class="step-num flex items-start p-3 bg-slate-50 rounded-xl"><div><strong class="text-slate-800">Modules &amp; Learning Outcomes tab</strong> — each module (gerundized unit) lists its Learning Outcomes. For each LO you can click <span class="text-purple-600 font-bold">AI Draft</span> to generate <strong>Conditions</strong> and <strong>Methodologies</strong> (the two fields with no direct CS source), review, and save.</div></div>
+        <div class="step-num flex items-start p-3 bg-slate-50 rounded-xl"><div><strong class="text-slate-800">Resources tab</strong> — the tools/equipment come from the CS; you add the two curriculum-only areas here (see below), each with its own AI Generate.</div></div>
+        <div class="step-num flex items-start p-3 bg-slate-50 rounded-xl"><div><strong class="text-slate-800">Gerund Review tab</strong> — check the auto-generated module titles; override any that read oddly.</div></div>
+        <div class="step-num flex items-start p-3 bg-slate-50 rounded-xl"><div><strong class="text-slate-800">Download .docx</strong> — export the full curriculum document.</div></div>
+    </div>
+
+    <!-- Resource areas + AI -->
+    <h3 class="text-lg font-bold text-slate-900 mb-3"><i class="fa-solid fa-boxes-stacked text-emerald-500 mr-2"></i>Resources — Contextual &amp; Learning Resource Areas</h3>
+    <p class="text-sm text-slate-600 mb-4">The Resources tab has two curriculum-only lists that each have their <strong>own purple "AI Generate"</strong> button:</p>
+    <div class="grid sm:grid-cols-2 gap-4 mb-4 text-xs">
+        <div class="border border-slate-200 rounded-xl p-4"><p class="font-bold text-slate-800 mb-1">Contextual Learning Area <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-purple-50 text-purple-600 text-[9px]"><i class="fa-solid fa-wand-magic-sparkles"></i>AI Generate</span></p><p class="text-slate-500 leading-relaxed">Spaces for theory/classroom learning (lecture/discussion area, audio-visual area, simulation area). AI suggests rows from the course's modules, tools/equipment, and facilities.</p></div>
+        <div class="border border-slate-200 rounded-xl p-4"><p class="font-bold text-slate-800 mb-1">Learning Resource Area <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-purple-50 text-purple-600 text-[9px]"><i class="fa-solid fa-wand-magic-sparkles"></i>AI Generate</span></p><p class="text-slate-500 leading-relaxed">Where learning references live (library/reference area, learning modules/CBLMs, manuals, e-learning access). AI suggests relevant rows for this specific qualification.</p></div>
+    </div>
+    <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-4 mb-8">
+        <p class="text-xs text-emerald-800"><i class="fa-solid fa-circle-check text-emerald-600 mr-1.5"></i>Click <strong>AI Generate</strong> for either area and it appends suggested rows (quantity, unit, description) for you to review — then click <strong>"Save Resource Areas"</strong> to keep them. Like all CS/CBC AI, this counts against your daily quota.</p>
+    </div>
+
+    <!-- Elective/SIL note -->
+    <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 mb-8">
+        <p class="text-xs text-slate-600 leading-relaxed"><i class="fa-solid fa-circle-question text-slate-500 mr-1.5"></i><strong>What are Elective Hours &amp; SIL Hours?</strong> <strong>Elective Hours</strong> = time for optional/specialization (elective) competencies. <strong>SIL Hours</strong> = Supervised Industry Learning — the workplace/on-the-job training portion. These are <strong>manual fields</strong> that default to <code>N/A</code> because there's no competency data to compute them from — type your values in the Course Design tab and save. Basic/Common/Core hours, by contrast, are computed automatically from the units.</p>
+    </div>
+
+    <!-- Non-destructive callout -->
+    <div class="bg-blue-50 border border-blue-200 rounded-2xl p-5">
+        <p class="text-sm font-bold text-slate-900 mb-2 flex items-center gap-2"><i class="fa-solid fa-shield-halved text-blue-600"></i> Your CS is never touched</p>
+        <p class="text-xs text-slate-600 leading-relaxed">The CBC reads the CS <strong>live</strong> and stores only CBC-specific extras (course fields, per-outcome Conditions/Methodologies overrides, resource areas, module-hour/title overrides). Editing or deleting a CBC never changes the underlying Competency Standard. If you update the CS later, the CBC reflects the change automatically. Note that a competency unit <em>disabled</em> on the CS qualification is excluded from the CBC and its hour totals.</p>
     </div>
 </section>
 
@@ -983,6 +1595,38 @@ code { font-family: 'Courier New', monospace; font-size: 0.8em; background: #f1f
                 <i class="fa-solid fa-chevron-down text-slate-400 group-open:rotate-180 transition-transform text-xs"></i>
             </summary>
             <div class="px-5 pb-4 text-xs text-slate-600 leading-relaxed">The student is flagged as "at risk" in the teacher's student tracker. Staff or teachers can then decide to reset attempts (by admin intervention) or provide additional support. The enrollment remains active.</div>
+        </details>
+
+        <details class="border border-slate-200 rounded-xl overflow-hidden group">
+            <summary class="px-5 py-4 cursor-pointer flex items-center justify-between text-sm font-bold text-slate-800 hover:bg-slate-50">
+                Why can't I edit some competency units in the CS Generator?
+                <i class="fa-solid fa-chevron-down text-slate-400 group-open:rotate-180 transition-transform text-xs"></i>
+            </summary>
+            <div class="px-5 pb-4 text-xs text-slate-600 leading-relaxed">Units with a purple <strong>TESDA</strong> badge are TESDA-standard (global) and are maintained centrally — they're read-only for staff. Basic competencies and global Common competencies fall in this category. To have your own editable version, create a Common competency under your institution (it shows a green "My Institution" badge and is fully editable).</div>
+        </details>
+
+        <details class="border border-slate-200 rounded-xl overflow-hidden group">
+            <summary class="px-5 py-4 cursor-pointer flex items-center justify-between text-sm font-bold text-slate-800 hover:bg-slate-50">
+                My AI generation stopped with a "daily limit reached" message — what now?
+                <i class="fa-solid fa-chevron-down text-slate-400 group-open:rotate-180 transition-transform text-xs"></i>
+            </summary>
+            <div class="px-5 pb-4 text-xs text-slate-600 leading-relaxed">The CS &amp; CBC generators share a daily AI quota per institution that resets at midnight Philippine time (UTC+8). You can see your remaining quota on the Staff Console's "AI Generation Quota (CS &amp; CBC generators only)" panel. Wait for the reset, or ask the platform administrator to raise your institution's daily limit via its subscription plan. (Course/module/exam AI generation is separate and not affected by this quota.)</div>
+        </details>
+
+        <details class="border border-slate-200 rounded-xl overflow-hidden group">
+            <summary class="px-5 py-4 cursor-pointer flex items-center justify-between text-sm font-bold text-slate-800 hover:bg-slate-50">
+                I built core units but they disappeared — why?
+                <i class="fa-solid fa-chevron-down text-slate-400 group-open:rotate-180 transition-transform text-xs"></i>
+            </summary>
+            <div class="px-5 pb-4 text-xs text-slate-600 leading-relaxed">When creating a <strong>brand-new</strong> qualification, core units are held in the editor until you click the big <strong>"Create Qualification"</strong> button — closing the modal first discards them. When <strong>editing an existing</strong> qualification, "Save Unit Changes" saves each core unit to the database immediately, so it won't be lost.</div>
+        </details>
+
+        <details class="border border-slate-200 rounded-xl overflow-hidden group">
+            <summary class="px-5 py-4 cursor-pointer flex items-center justify-between text-sm font-bold text-slate-800 hover:bg-slate-50">
+                Does editing a CBC change the original Competency Standard?
+                <i class="fa-solid fa-chevron-down text-slate-400 group-open:rotate-180 transition-transform text-xs"></i>
+            </summary>
+            <div class="px-5 pb-4 text-xs text-slate-600 leading-relaxed">No. The CBC reads the CS live and stores only curriculum-specific extras and overrides. Editing or deleting a CBC never alters the underlying CS. If you later update the CS, the CBC reflects those changes automatically.</div>
         </details>
 
         <details class="border border-slate-200 rounded-xl overflow-hidden group">
